@@ -1,0 +1,7 @@
+.report-section {
+  background-color: #ffffff;
+  padding: 10px;
+  margin-left: 210px; /* Adjust this value if the FilterBar width + padding changes */
+  height: calc(100vh - 20px); /* Adjust height if the header has some height */
+  overflow-y: auto; /* Enables scrolling for the Report Section content if it exceeds the viewport height */
+}
