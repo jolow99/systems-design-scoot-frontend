@@ -6,6 +6,7 @@ import { LineChart_FlightCost } from "../components/LineChartFlightCost";
 const ReportSection = ({rows, className}) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJustification, setSelectedJustification] = useState(null);
+  const [remarks, setRemarks] = useState('');
 
   const BUTTONS = {
     displayValue1: "actual label 1",
@@ -62,6 +63,16 @@ const ReportSection = ({rows, className}) => {
               ))
             }
           </div>
+        </div>
+
+        {/* TODO: remark text box */}
+        <div className='mt-8'>
+          <textarea
+            className='w-full p-4 text-black border-2 border-gray-300 rounded focus:outline-none focus:border-blue-500'
+            placeholder='Remarks...'
+            rows='2' 
+            onChange={(e) => setRemarks(e.target.value)} 
+          ></textarea>
         </div>
 
         <div className='mt-8'>
