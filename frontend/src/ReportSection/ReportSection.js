@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import "./ReportSection.css";
 import Modal from '../components/modal';
+import { LineChart_FlightCost } from "../components/LineChartFlightCost";
 
 const ReportSection = ({rows, className}) => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -38,8 +39,11 @@ const ReportSection = ({rows, className}) => {
 
         {/* TODO: graph */} 
         <div className='flex flex-row w-full justify-center items-center mt-8 mb-4'>
-          <div className="w-[300px] h-[100px] border-2 flex flex-col justify-center items-center">
-            GRAPH
+          <div className="w-[500px] h-[350px] border-2 flex flex-col justify-center items-center">
+            <span  style={{fontSize: '20px', fontWeight: 'bold'}}>
+              Flight: XXX
+            </span>
+            <LineChart_FlightCost/>
           </div>
         </div>
 
