@@ -1,0 +1,57 @@
+.chart-component {
+  margin: auto;
+}
+
+.chart-component table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.chart-component th, .chart-component td {
+  border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.chart-component th {
+  background-color: #f4f4f4;
+}
+
+.chart-component tr:nth-child(even) {
+  background-color: #f9f9f9; 
+}
+
+.chart-component .total-row td {
+  background-color: #e7e7e7;
+  font-weight: bold;
+}
+
+.chart-component tfoot td {
+  background-color: #fff;
+  border: none;
+  text-align: center; 
+}
+
+.chart-component button {
+  background-color: #f9f9f9; 
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.chart-component button.selected {
+  background-color: #82de85; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.highlight {
+  background-color: #ffbf75; 
+  font-weight: bold;
+}

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./ReportSection.css";
 import Modal from '../components/modal';
 import { LineChart_FlightCost } from "../components/LineChartFlightCost";
+import { Chart_DelayCost } from "../components/ChartDelayCost";
 
 const ReportSection = ({rows, className}) => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -25,21 +26,34 @@ const ReportSection = ({rows, className}) => {
 
   return (
     <div className={`w-full ${className}`}>
-    Report Section
+      <div className="report-header">
+        <div className="report-title">View</div>
+        <div className="report-subtitle">Scoot</div>
+        <div className="report-details">
+          <div>06FEB24 16</div>
+          <div>Downline Passenger Report</div>
+          <div>By: SHQIUB</div>
+        </div>
+      </div>
+      <div className="report-metadata">
+        <div>Origin City: UPG</div>
+        <div>Flight No.: 235</div>
+        <div>Flight Date: 06FEB24</div>
+      </div>
 
-    <div className='w-full m-10 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg'>
+    <div className='w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg'>
       {
         rows.map((row, index) => (
           <Row key={index} row={row} onClick={()=>setSelectedRow(row)}/>
         ))
       }
     </div>
-
+    <div className="end-of-report">End of report</div>
     <Modal isOpen={selectedRow} onClose={()=>setSelectedRow(null)}>
       <div className="p-8 flex flex-col w-full">
 
         {/* TODO: graph */} 
-        <div className='flex flex-row w-full justify-center items-center mt-8 mb-4'>
+        <div className='flex flex-row w-full justify-center items-center'>
           <div className="w-[500px] h-[350px] border-2 flex flex-col justify-center items-center">
             <span  style={{fontSize: '20px', fontWeight: 'bold'}}>
               Flight: XXX
@@ -49,17 +63,26 @@ const ReportSection = ({rows, className}) => {
         </div>
 
         {/* TODO: display data */} 
-        <div className='flex flex-row justify-between items-center w-full mt-8'>
-          <div className='flex-1'>DATA 1</div>
-          <div className='flex-1'>DATA 2</div>
+        <div className='flex flex-row justify-between items-center w-full'>
+          <Chart_DelayCost/>
         </div>
 
-        <div className='mt-8'>
-          <div className='text-xl flex flex-row justify-start mt-5'>Justification</div>
-          <div className='flex flex-row justify-between items-center flex-wrap w-full mt-2 gap-2'>
+        <div className='mt-3'>
+          <div className='text-xl flex flex-row justify-start'>Justification</div>
+          <div className='flex flex-row justify-between items-center flex-wrap w-full gap-2'>
             {
               Object.keys(BUTTONS).map((key) => (
-                <button key={key} onClick={()=>setSelectedJustification(BUTTONS[key])} className={` text-white px-4 py-2 rounded ${BUTTONS[key] === selectedJustification ? "bg-blue-500" : "bg-gray-500"}`}>{key}</button>
+                <button 
+                  key={key} 
+                  onClick={() => setSelectedJustification(BUTTONS[key])} 
+                  className="text-white px-4 py-2 rounded" 
+                  style={{
+                    backgroundColor: BUTTONS[key] === selectedJustification ? "#82de85" : "#f9f9f9",
+                    color: BUTTONS[key] === selectedJustification ? "#fff" : "#000"
+                  }}
+                >
+                  {key}
+                </button>
               ))
             }
           </div>
@@ -76,7 +99,13 @@ const ReportSection = ({rows, className}) => {
         </div>
 
         <div className='mt-8'>
-          <button className='bg-green-500 text-white px-4 py-3 rounded' onClick={handleOnSubmit}>Submit</button>
+        <button
+          style={{ backgroundColor: '#9c9c9c' }} 
+          className='text-white px-4 py-3 rounded'
+          onClick={handleOnSubmit}
+        >
+          Submit
+        </button>
         </div>
 
       </div>
