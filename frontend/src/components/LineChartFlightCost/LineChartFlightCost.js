@@ -28,14 +28,6 @@ export const LineChart_FlightCost = ({ flight }) => {
     labels: ['0 min', '5 min', '10 min', '15 min', '20 min', '25 min', '30 min', '35 min', '40 min', '45 min', '50 min', '55 min', '60 min'],
     datasets: [
       {
-        label: 'Delay Cost',
-        data: [90, 120, 190, 300, 250, 220, 350, 320, 280, 250, 270, 220, 260],
-        fill: false,
-        backgroundColor: '#1679DB',
-        borderColor: '#1679DB',
-        hoverBackgroundColor: '#3199FF',
-      },
-      {
         label: 'No Delay Cost',
         data: [200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200],
         fill: false,
@@ -43,16 +35,24 @@ export const LineChart_FlightCost = ({ flight }) => {
         borderColor: '#EE5757',
         hoverBackgroundColor: '#FF7171',
       },
+      {
+        label: 'Delay Cost',
+        data: [90, 120, 190, 300, 250, 220, 350, 320, 280, 250, 270, 220, 260],
+        fill: false,
+        backgroundColor: '#1679DB',
+        borderColor: '#1679DB',
+        hoverBackgroundColor: '#3199FF',
+      },
     ],
   };
 
   // Updated Custom Legend Component
   const CustomLegend = ({ data }) => {
     if (!data?.datasets?.length) {
-      return null; // Ensures data and datasets are defined before rendering
+      return null; 
     }
   
-    const labelsToShow = ["Delay Cost", "No Delay Cost"]; // Specified labels to show
+    const labelsToShow = ["Delay Cost", "No Delay Cost"]; 
   
     return (
       <div className="chartjs-legend" style={{ display: 'flex', justifyContent: 'center', width: '100%', paddingTop: '5px' }}>
@@ -61,9 +61,9 @@ export const LineChart_FlightCost = ({ flight }) => {
       .filter(dataset => labelsToShow.includes(dataset.label))
       .map((dataset, index) => (
         <li key={index} style={{
-            display: 'flex', // Makes <li> elements flex containers themselves
-            alignItems: 'center', // Vertically centers the circle and text within each <li>
-            marginRight: '15px', // Adds some space between the legend items
+            display: 'flex', 
+            alignItems: 'center', 
+            marginRight: '15px', 
         }}>
           <span style={{
             display: 'inline-block',
@@ -71,8 +71,8 @@ export const LineChart_FlightCost = ({ flight }) => {
             backgroundColor: dataset.backgroundColor,
             width: '12px',
             height: '12px',
-            borderRadius: '50%', // Makes the span a circle
-            border: `2px solid ${dataset.borderColor}`, // Adds a border color similar to the line color
+            borderRadius: '50%', 
+            border: `2px solid ${dataset.borderColor}`, 
           }}></span>
           {dataset.label}
         </li>
@@ -86,7 +86,6 @@ export const LineChart_FlightCost = ({ flight }) => {
   let maxValue = Math.max(...data.datasets[0].data, ...data.datasets[1].data);
   maxValue += 50;
 
-  // Options for the chart
   const options = {
     scales: {
       x: {
@@ -116,7 +115,7 @@ export const LineChart_FlightCost = ({ flight }) => {
           },
           ticks: {
             beginAtZero: true,
-            stepSize: 50, // Adjust based on your data
+            stepSize: 50, 
           },
           padding: { top: 0, left: 0, right: 0, bottom: 10 },
         },
@@ -125,7 +124,7 @@ export const LineChart_FlightCost = ({ flight }) => {
     },
     plugins: {
       legend: {
-        display: false, // Correctly disables the default legend
+        display: false, 
       },
     },
     responsive: true,
