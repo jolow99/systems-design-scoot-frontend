@@ -9,9 +9,11 @@ function App() {
   const [flightsData, setFlightsData] = useState({});
   const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
   const [flightSchedules, setFlightSchedules] = useState({});
+  const [newArrivalTime, setNewArrivalTime] = useState("");
   const onSearch = (flightNumber, includeIATCIFlights, showPassengerNames) => {
     //TODO: put ur on search logic here
     //TODO: after hit api, setSearchResults with the response
+    setNewArrivalTime(newArrivalTime);
   };
 
   const FIXED_DATE = "01";
@@ -46,6 +48,7 @@ function App() {
             flightsData={flightsData}
             onFlightSelect={handleFlightSelect}
             fixedDate={FIXED_DATE}
+            newArrivalTime={newArrivalTime}
           />
           <ReportSection
             selectedFlightNumber={selectedFlightNumber}

@@ -11,14 +11,26 @@ const FilterBar = ({
   const [flightNumber, setFlightNumber] = useState("");
   const [includeIATCIFlights, setIncludeIATCIFlights] = useState(true);
   const [showPassengerNames, setShowPassengerNames] = useState(false);
+  const [newArrivalTime, setNewArrivalTime] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(flightNumber, includeIATCIFlights, showPassengerNames);
+    const flightNumber = document.getElementById("flightNumberSelect").value;
+    console.log(
+      flightNumber,
+      includeIATCIFlights,
+      showPassengerNames,
+      newArrivalTime
+    );
     if (flightNumber.length === 0 || flightNumber.trim().length === 0) {
       return;
     }
-    onSearch(flightNumber, includeIATCIFlights, showPassengerNames);
+    onSearch(
+      flightNumber,
+      newArrivalTime,
+      includeIATCIFlights,
+      showPassengerNames
+    );
   };
   console.log(flightsData);
   return (
@@ -36,6 +48,19 @@ const FilterBar = ({
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="flex flex-col">
+          <label className="font-semibold text-gray-700">
+            New Arrival Time:
+          </label>
+          <input
+            type="text"
+            value={newArrivalTime}
+            onChange={(e) => setNewArrivalTime(e.target.value)}
+            placeholder="HH:MM:SS"
+            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          />
         </div>
 
         <fieldset className="space-y-1">
