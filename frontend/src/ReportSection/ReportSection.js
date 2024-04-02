@@ -179,11 +179,9 @@ const ReportSection = ({
         </div>
       </div>
       <div className="report-metadata">
-        <div>Origin City: UPG</div>
-        <div>Flight No.:TR{selectedFlightNumber}</div>
-        <div>Departure Country: {scheduleInfo?.departure}</div>
-        <div>Arrival Country: {scheduleInfo?.arrival}</div>
-        <div>Flight Date: {fixedDate} JAN</div>
+        <div>Origin City: {scheduleInfo?.departure}</div>
+        <div>Flight No:{selectedFlightNumber}</div>
+        <div>Flight Date: {fixedDate}JAN24</div>
       </div>
       <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
         {connectingFlightsData &&
@@ -196,6 +194,10 @@ const ReportSection = ({
               <p>TR {flightNum}</p>
               <p>Point to point passengers: {details.p2p}</p>
               <p>Connecting passengers: {details.cp}</p>
+              <p>
+                Departure Time: {flightSchedules[flightNum]?.departure_time}
+              </p>
+              <p>Arrival City: {flightSchedules[flightNum]?.arrival}</p>
               {/* Insert additional details as needed */}
             </div>
           ))}
