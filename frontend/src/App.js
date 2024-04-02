@@ -10,10 +10,12 @@ function App() {
   const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
   const [flightSchedules, setFlightSchedules] = useState({});
   const [newArrivalTime, setNewArrivalTime] = useState("");
-  const onSearch = (flightNumber, includeIATCIFlights, showPassengerNames) => {
+  const onSearch = (flightNumber, newTime, includeIATCIFlights, showPassengerNames) => {
     //TODO: put ur on search logic here
     //TODO: after hit api, setSearchResults with the response
-    setNewArrivalTime(newArrivalTime);
+    setNewArrivalTime(newTime);
+    // console log newTime
+    console.log(newTime);
   };
 
   const FIXED_DATE = "01";
@@ -45,12 +47,14 @@ function App() {
       <div className="flex flex-row justify-center w-full mt-4 max-h-full">
         <div className="max-w-[1200px] w-full flex flex-row">
           <FilterBar
+            onSearch={onSearch}
             flightsData={flightsData}
             onFlightSelect={handleFlightSelect}
             fixedDate={FIXED_DATE}
             newArrivalTime={newArrivalTime}
           />
           <ReportSection
+            newArrivalTime={newArrivalTime}
             selectedFlightNumber={selectedFlightNumber}
             fixedDate={FIXED_DATE}
             flightSchedules={flightSchedules}

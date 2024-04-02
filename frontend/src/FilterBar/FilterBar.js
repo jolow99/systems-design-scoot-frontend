@@ -16,18 +16,31 @@ const FilterBar = ({
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(flightNumber, includeIATCIFlights, showPassengerNames);
-    if (flightNumber.length === 0 || flightNumber.trim().length === 0) {
+    // if (flightNumber.length === 0 || flightNumber.trim().length === 0) {
+    //   return;
+    // }
+
+    // Validate newArrivalTime format
+    if (!newArrivalTime.match(/^\d{2}:\d{2}$/)) {
+      console.error("Invalid newArrivalTime format");
       return;
     }
+
+    console.log(flightNumber);
+    // Check if flightNumber is provided
+    if (flightNumber.trim().length === 0) {
+      console.error("Flight number is required");
+      return;
+    }
+
     onSearch(
       flightNumber,
       newArrivalTime,
       includeIATCIFlights,
       showPassengerNames,
-      newArrivalTime
     );
   };
-  console.log(flightsData);
+  // console.log(flightsData);
   return (
     <div
       className={`filter-bar bg-gray-50 p-4 rounded-lg shadow w-full ${className}`}
@@ -35,7 +48,7 @@ const FilterBar = ({
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label className="font-semibold text-gray-700">Flight:</label>
-          <select onChange={(e) => onFlightSelect(e.target.value)}>
+          <select onChange={(e) => { setFlightNumber(e.target.value); onFlightSelect(e.target.value); }}>
             <option value="">Select a flight</option>
             {Object.keys(flightsData).map((flightNumber) => (
               <option key={flightNumber} value={flightNumber}>

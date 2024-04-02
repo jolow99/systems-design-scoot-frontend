@@ -94,13 +94,15 @@ const ReportSection = ({
   selectedFlightNumber,
   flightSchedules,
   fixedDate,
-  newArrivalTime, //adsd this also
+  newArrivalTime, 
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJustification, setSelectedJustification] = useState(null);
   const [remarks, setRemarks] = useState("");
   const [selectedColumn, setSelectedColumn] = useState(null);
   const scheduleInfo = flightSchedules[selectedFlightNumber];
+
+  // console.log(newArrivalTime);
 
   const BUTTONS = {
     displayValue1: "Reurn Sector Issues",
@@ -187,20 +189,31 @@ const ReportSection = ({
       <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
         {connectingFlightsData &&
           Object.entries(connectingFlightsData).map(([flightNum, details]) => (
-            <div
+            // <div
+            //   key={flightNum}
+            //   onClick={() => setSelectedRow(details)}
+            //   className="w-full border-b px-6 py-4 hover:cursor-pointer"
+            // >
+            //   <p>TR {flightNum}</p>
+            //   <p>Point to point passengers: {details.p2p}</p>
+            //   <p>Connecting passengers: {details.cp}</p>
+            //   <p>
+            //     Departure Time: {flightSchedules[flightNum]?.departure_time}
+            //   </p>
+            //   <p>Arrival City: {flightSchedules[flightNum]?.arrival}</p>
+            //   {/* Insert additional details as needed */}
+            // </div>
+            <Row
               key={flightNum}
-              onClick={() => setSelectedRow(details)}
-              className="w-full border-b px-6 py-4 hover:cursor-pointer"
-            >
-              <p>TR {flightNum}</p>
-              <p>Point to point passengers: {details.p2p}</p>
-              <p>Connecting passengers: {details.cp}</p>
-              <p>
-                Departure Time: {flightSchedules[flightNum]?.departure_time}
-              </p>
-              <p>Arrival City: {flightSchedules[flightNum]?.arrival}</p>
-              {/* Insert additional details as needed */}
-            </div>
+              flightNum={flightNum}
+              details={{
+                ...details,
+                departure_time: flightSchedules[flightNum]?.departure_time,
+                arrival: flightSchedules[flightNum]?.arrival,
+              }}
+              newArrivalTime={newArrivalTime}
+              onClick={setSelectedRow} // Pass the setSelectedRow function directly
+            />
           ))}
       </div>
 
@@ -289,46 +302,41 @@ const ReportSection = ({
 //   );
 // };
 
-// export default ReportSection;
-
-const Row = ({ row, flightSchedules, newArrivalTime, onClick }) => {
-  // Assuming parseTime is a function that converts "HH:MM" string to a Date object
-  const parseTime = (timeString) => {
-    const [hours, minutes] = timeString.split(":").map(Number);
-    return new Date(0, 0, 0, hours, minutes);
+const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
+  console.log(`newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`);
+  const timeToMinutes = (time) => {
+    if (typeof time !== 'string') {
+      // console.error('Invalid time format:', time);
+      return null; // Return null to indicate an error
+    }
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
   };
 
-  // Ensure that flightSchedules and newArrivalTime are available and valid
-  if (!flightSchedules || !newArrivalTime) {
-    return null; // or some placeholder/error component
-  }
+  const departureTimeMinutes = timeToMinutes(details.departure_time);
+  const newArrivalTimeMinutes = timeToMinutes(newArrivalTime);
+  
+  console.log(`Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`);
 
-  // Retrieve the current flight's schedule
-  const currentFlightSchedule = flightSchedules[row.flightNumber];
+  const isAfterNewArrival = departureTimeMinutes > newArrivalTimeMinutes;
 
-  // Parse departure and new arrival times
-  const departureTime = parseTime(currentFlightSchedule?.departure_time);
-  const arrivalTime = parseTime(newArrivalTime);
-
-  // Calculate the difference in minutes between departure and new arrival times
-  const timeDifference = (departureTime - arrivalTime) / (60 * 1000); // Convert to minutes
-
-  // Decide if the difference is less than 60 minutes
-  const isDecided = timeDifference < 60;
-
-  const baseClasses = "w-full border-b px-6 py-4 hover:cursor-pointer";
-  const conditionalClasses = isDecided
-    ? "bg-red-300 hover:bg-red-500"
-    : "bg-white hover:bg-gray-400";
-  const className = `${baseClasses} ${conditionalClasses}`;
+  // Conditional styling based on time comparison
+  const rowClasses = `w-full border-b px-6 py-4 hover:cursor-pointer ${isAfterNewArrival ? "bg-red-200" : ""}`;
 
   return (
-    <div onClick={() => onClick(row)} className={className}>
-      {/* ... other row content ... */}
-      <p>Flight Number: {row.flightNumber}</p>
-      {/* ... other row content ... */}
+    <div
+      onClick={() => onClick(details)} 
+      className={rowClasses}
+    >
+      <p>TR {flightNum}</p>
+      <p>Point to point passengers: {details.p2p}</p>
+      <p>Connecting passengers: {details.cp}</p>
+      <p>Departure Time: {details.departure_time}</p>
+      <p>Arrival City: {details.arrival}</p>
+      {isAfterNewArrival && <p className="text-red-500">Departs after new arrival time</p>}
     </div>
   );
 };
+
 
 export default ReportSection;
