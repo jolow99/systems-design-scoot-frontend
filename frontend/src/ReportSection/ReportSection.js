@@ -95,6 +95,7 @@ const ReportSection = ({
   flightSchedules,
   fixedDate,
   selectedConnectingFlightNumber,
+  setSelectedConnectingFlightNumber,
   newArrivalTime,
   searchResults,
 }) => {
@@ -104,8 +105,10 @@ const ReportSection = ({
   const [selectedColumn, setSelectedColumn] = useState(null);
   const scheduleInfo = flightSchedules[flightNumber];
 
-  // console.log(newArrivalTime);
+  console.log(newArrivalTime);
   console.log(flightNumber);
+  console.log(searchResults);
+  console.log(selectedConnectingFlightNumber);
 
   const BUTTONS = {
     displayValue1: "Reurn Sector Issues",
@@ -201,7 +204,10 @@ const ReportSection = ({
                 arrival: flightSchedules[flightNum]?.arrival,
               }}
               newArrivalTime={newArrivalTime}
-              onClick={setSelectedRow} // Pass the setSelectedRow function directly
+              onClick={() => {
+                setSelectedConnectingFlightNumber(flightNum);
+                setSelectedRow(details);
+              }}
             />
           ))}
       </div>
@@ -217,11 +223,11 @@ const ReportSection = ({
                 number
               </span>
               <LineChart_FlightCost
-              // connectingFlightNumber={selectedConnectingFlightNumber} // Pass the connecting flight number to the chart
-              // data={
-              //   searchResults["Line"][selectedConnectingFlightNumber]?.sum ||
-              //   []
-              // }
+                connectingFlightNumber={selectedConnectingFlightNumber}
+                costData={
+                  searchResults["Line"]?.[selectedConnectingFlightNumber]
+                    ?.sum || []
+                }
               />
             </div>
           </div>
@@ -318,7 +324,7 @@ const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
     `Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`
   );
 
-  const isAfterNewArrival = departureTimeMinutes > newArrivalTimeMinutes;
+  const isAfterNewArrival = departureTimeMinutes < newArrivalTimeMinutes;
 
   // Conditional styling based on time comparison
   const rowClasses = `w-full border-b px-6 py-4 hover:cursor-pointer ${
@@ -333,7 +339,7 @@ const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
       <p>Departure Time: {details.departure_time}</p>
       <p>Arrival City: {details.arrival}</p>
       {isAfterNewArrival && (
-        <p className="text-red-500">Departs after new arrival time</p>
+        <p className="text-red-500">Delay decision required</p>
       )}
     </div>
   );

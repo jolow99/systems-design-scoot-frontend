@@ -7,9 +7,11 @@ import "./App.css";
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [flightsData, setFlightsData] = useState({});
-  //const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
   const [selectedConnectingFlightNumber, setSelectedConnectingFlightNumber] =
     useState("");
+  const handleSelectConnectingFlight = (flightNum) => {
+    setSelectedConnectingFlightNumber(flightNum);
+  };
   const [flightSchedules, setFlightSchedules] = useState({});
   const [newArrivalTime, setNewArrivalTime] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
@@ -24,8 +26,8 @@ function App() {
     setNewArrivalTime(newTime);
     setFlightNumber(flightNumber);
     console.log(newTime);
-    // const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}`;
-    const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/2/2023-04-01/18:30`;
+    const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}`;
+    //const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/2/2023-04-01/18:30`;
 
     try {
       const response = await fetch(apiURL);
@@ -44,13 +46,13 @@ function App() {
   const FIXED_DATE = "01";
 
   useEffect(() => {
-    fetch("/connecting_flights_dictionary.json")
+    fetch("/connecting_flights_dict.json")
       .then((response) => response.json())
       .then((data) => {
         setFlightsData(data[FIXED_DATE]);
       })
       .catch((error) => console.error("Error fetching flights data:", error));
-    fetch("/flights_schedule_dict.json")
+    fetch("/flights_schedule.json")
       .then((response) => response.json())
       .then((data) => {
         setFlightSchedules(data[FIXED_DATE]);
@@ -59,11 +61,6 @@ function App() {
         console.error("Error fetching flight schedules data:", error)
       );
   }, []);
-
-  // const handleFlightSelect = (flightNumber) => {
-  //   setFlightNumber(flightNumber);
-  //   console.log(selectedFlightNumber);
-  // };
 
   return (
     <div className="App w-screen h-screen">
@@ -82,11 +79,13 @@ function App() {
           <ReportSection
             newArrivalTime={newArrivalTime}
             searchResults={searchResults}
-            // selectedFlightNumber={selectedFlightNumber}
             fixedDate={FIXED_DATE}
             flightSchedules={flightSchedules}
             connectingFlightData={searchResults}
             selectedConnectingFlightNumber={selectedConnectingFlightNumber}
+            setSelectedConnectingFlightNumber={
+              setSelectedConnectingFlightNumber
+            }
             flightNumber={flightNumber}
             connectingFlightsData={
               flightNumber ? flightsData[flightNumber]?.connecting_flights : {}

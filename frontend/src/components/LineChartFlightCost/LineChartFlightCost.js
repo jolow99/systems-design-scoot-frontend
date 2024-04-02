@@ -22,11 +22,8 @@ ChartJS.register(
   Legend
 );
 
-export const LineChart_FlightCost = ({
-  flightNumber,
-  delayCost,
-  noDelayCost,
-}) => {
+export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
+  const noDelayCostData = Array(costData.length).fill(costData[0] || 0);
   // Dummy data for the chart
   const data = {
     labels: [
@@ -47,7 +44,7 @@ export const LineChart_FlightCost = ({
     datasets: [
       {
         label: "No Delay Cost",
-        data: { noDelayCost },
+        data: noDelayCostData,
         fill: false,
         backgroundColor: "#EE5757",
         borderColor: "#EE5757",
@@ -55,7 +52,7 @@ export const LineChart_FlightCost = ({
       },
       {
         label: "Delay Cost",
-        data: { delayCost },
+        data: costData,
         fill: false,
         backgroundColor: "#1679DB",
         borderColor: "#1679DB",
