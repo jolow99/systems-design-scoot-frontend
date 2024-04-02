@@ -96,7 +96,7 @@ const ReportSection = ({
   flightSchedules,
   fixedDate,
   selectedConnectingFlightNumber,
-  newArrivalTime, 
+  newArrivalTime,
   searchResults,
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -218,11 +218,11 @@ const ReportSection = ({
                 number
               </span>
               <LineChart_FlightCost
-                // connectingFlightNumber={selectedConnectingFlightNumber} // Pass the connecting flight number to the chart
-                // data={
-                //   searchResults["Line"][selectedConnectingFlightNumber]?.sum ||
-                //   []
-                // }
+              // connectingFlightNumber={selectedConnectingFlightNumber} // Pass the connecting flight number to the chart
+              // data={
+              //   searchResults["Line"][selectedConnectingFlightNumber]?.sum ||
+              //   []
+              // }
               />
             </div>
           </div>
@@ -300,40 +300,44 @@ const ReportSection = ({
 // };
 
 const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
-  console.log(`newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`);
+  console.log(
+    `newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`
+  );
   const timeToMinutes = (time) => {
-    if (typeof time !== 'string') {
+    if (typeof time !== "string") {
       // console.error('Invalid time format:', time);
       return null; // Return null to indicate an error
     }
-    const [hours, minutes] = time.split(':').map(Number);
+    const [hours, minutes] = time.split(":").map(Number);
     return hours * 60 + minutes;
   };
 
   const departureTimeMinutes = timeToMinutes(details.departure_time);
   const newArrivalTimeMinutes = timeToMinutes(newArrivalTime);
-  
-  console.log(`Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`);
+
+  console.log(
+    `Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`
+  );
 
   const isAfterNewArrival = departureTimeMinutes > newArrivalTimeMinutes;
 
   // Conditional styling based on time comparison
-  const rowClasses = `w-full border-b px-6 py-4 hover:cursor-pointer ${isAfterNewArrival ? "bg-red-200" : ""}`;
+  const rowClasses = `w-full border-b px-6 py-4 hover:cursor-pointer ${
+    isAfterNewArrival ? "bg-red-200" : ""
+  }`;
 
   return (
-    <div
-      onClick={() => onClick(details)} 
-      className={rowClasses}
-    >
+    <div onClick={() => onClick(details)} className={rowClasses}>
       <p>TR {flightNum}</p>
       <p>Point to point passengers: {details.p2p}</p>
       <p>Connecting passengers: {details.cp}</p>
       <p>Departure Time: {details.departure_time}</p>
       <p>Arrival City: {details.arrival}</p>
-      {isAfterNewArrival && <p className="text-red-500">Departs after new arrival time</p>}
+      {isAfterNewArrival && (
+        <p className="text-red-500">Departs after new arrival time</p>
+      )}
     </div>
   );
 };
-
 
 export default ReportSection;

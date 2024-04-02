@@ -7,12 +7,18 @@ import "./App.css";
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [flightsData, setFlightsData] = useState({});
-  const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
-  const [selectedConnectingFlightNumber, setSelectedConnectingFlightNumber] = useState("");
+  //const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
+  const [selectedConnectingFlightNumber, setSelectedConnectingFlightNumber] =
+    useState("");
   const [flightSchedules, setFlightSchedules] = useState({});
   const [newArrivalTime, setNewArrivalTime] = useState("");
-  const [flightNumber, setFlightNumber] = useState(""); 
-  const onSearch = async (flightNumber, newTime, includeIATCIFlights, showPassengerNames) => {
+  const [flightNumber, setFlightNumber] = useState("");
+  const onSearch = async (
+    flightNumber,
+    newTime,
+    includeIATCIFlights,
+    showPassengerNames
+  ) => {
     // const formattedTime = newTime.replace(":", "");
     const fixedDate = "01"; // Ensure this is dynamically updated if necessary
     setNewArrivalTime(newTime);
@@ -33,7 +39,7 @@ function App() {
       console.error("Error fetching data:", error);
       setSearchResults([]); // Handle the error state as needed
     }
-  };  
+  };
 
   const FIXED_DATE = "01";
 
@@ -80,12 +86,10 @@ function App() {
             fixedDate={FIXED_DATE}
             flightSchedules={flightSchedules}
             connectingFlightData={searchResults}
-            // selectedConnectingFlightNumber={selectedConnectingFlightNumber}
+            selectedConnectingFlightNumber={selectedConnectingFlightNumber}
             flightNumber={flightNumber}
             connectingFlightsData={
-              selectedFlightNumber
-                ? flightsData[selectedFlightNumber]?.connecting_flights
-                : {}
+              flightNumber ? flightsData[flightNumber]?.connecting_flights : {}
             }
           />
         </div>
