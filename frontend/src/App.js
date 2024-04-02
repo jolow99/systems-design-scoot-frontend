@@ -8,16 +8,19 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [flightsData, setFlightsData] = useState({});
   const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
+  const [selectedConnectingFlightNumber, setSelectedConnectingFlightNumber] = useState("");
   const [flightSchedules, setFlightSchedules] = useState({});
   const [newArrivalTime, setNewArrivalTime] = useState("");
+  const [flightNumber, setFlightNumber] = useState(""); 
   const onSearch = async (flightNumber, newTime, includeIATCIFlights, showPassengerNames) => {
-    const formattedTime = newTime.replace(":", "");
+    // const formattedTime = newTime.replace(":", "");
     const fixedDate = "01"; // Ensure this is dynamically updated if necessary
     setNewArrivalTime(newTime);
-  
+    setFlightNumber(flightNumber);
     console.log(newTime);
-    const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${formattedTime}`;
-  
+    // const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}`;
+    const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/2/2023-04-01/18:30`;
+
     try {
       const response = await fetch(apiURL);
       if (!response.ok) {
@@ -51,9 +54,10 @@ function App() {
       );
   }, []);
 
-  const handleFlightSelect = (flightNumber) => {
-    setSelectedFlightNumber(flightNumber);
-  };
+  // const handleFlightSelect = (flightNumber) => {
+  //   setFlightNumber(flightNumber);
+  //   console.log(selectedFlightNumber);
+  // };
 
   return (
     <div className="App w-screen h-screen">
@@ -64,17 +68,20 @@ function App() {
             onSearch={onSearch}
             searchResults={searchResults}
             flightsData={flightsData}
-            onFlightSelect={handleFlightSelect}
+            // onFlightSelect={handleFlightSelect}
             fixedDate={FIXED_DATE}
             newArrivalTime={newArrivalTime}
+            flightNumber={flightNumber}
           />
           <ReportSection
             newArrivalTime={newArrivalTime}
             searchResults={searchResults}
-            selectedFlightNumber={selectedFlightNumber}
+            // selectedFlightNumber={selectedFlightNumber}
             fixedDate={FIXED_DATE}
             flightSchedules={flightSchedules}
             connectingFlightData={searchResults}
+            // selectedConnectingFlightNumber={selectedConnectingFlightNumber}
+            flightNumber={flightNumber}
             connectingFlightsData={
               selectedFlightNumber
                 ? flightsData[selectedFlightNumber]?.connecting_flights

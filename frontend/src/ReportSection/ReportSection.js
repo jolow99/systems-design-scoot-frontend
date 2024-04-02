@@ -91,7 +91,8 @@ const ReportSection = ({
   rows,
   className,
   connectingFlightsData,
-  selectedFlightNumber,
+  // selectedFlightNumber,
+  flightNumber,
   flightSchedules,
   fixedDate,
   selectedConnectingFlightNumber,
@@ -102,9 +103,10 @@ const ReportSection = ({
   const [selectedJustification, setSelectedJustification] = useState(null);
   const [remarks, setRemarks] = useState("");
   const [selectedColumn, setSelectedColumn] = useState(null);
-  const scheduleInfo = flightSchedules[selectedFlightNumber];
+  const scheduleInfo = flightSchedules[flightNumber];
 
   // console.log(newArrivalTime);
+  console.log(flightNumber);
 
   const BUTTONS = {
     displayValue1: "Reurn Sector Issues",
@@ -185,26 +187,12 @@ const ReportSection = ({
       </div>
       <div className="report-metadata">
         <div>Origin City: {scheduleInfo?.departure}</div>
-        <div>Flight No:{selectedFlightNumber}</div>
+        <div>Flight No:{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
       </div>
       <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
         {connectingFlightsData &&
           Object.entries(connectingFlightsData).map(([flightNum, details]) => (
-            // <div
-            //   key={flightNum}
-            //   onClick={() => setSelectedRow(details)}
-            //   className="w-full border-b px-6 py-4 hover:cursor-pointer"
-            // >
-            //   <p>TR {flightNum}</p>
-            //   <p>Point to point passengers: {details.p2p}</p>
-            //   <p>Connecting passengers: {details.cp}</p>
-            //   <p>
-            //     Departure Time: {flightSchedules[flightNum]?.departure_time}
-            //   </p>
-            //   <p>Arrival City: {flightSchedules[flightNum]?.arrival}</p>
-            //   {/* Insert additional details as needed */}
-            // </div>
             <Row
               key={flightNum}
               flightNum={flightNum}
@@ -226,7 +214,7 @@ const ReportSection = ({
           <div className="flex flex-row w-full justify-center items-center">
             <div className="w-[500px] h-[350px] border-2 flex flex-col justify-center items-center">
               <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-                Flight: {selectedFlightNumber} //this should be the connecting flight
+                Flight: {flightNumber} //this should be the connecting flight
                 number
               </span>
               <LineChart_FlightCost
