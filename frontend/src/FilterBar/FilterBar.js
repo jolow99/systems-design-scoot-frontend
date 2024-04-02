@@ -21,7 +21,7 @@ const FilterBar = ({
     // }
 
     // Validate newArrivalTime format
-    if (!newArrivalTime.match(/^\d{2}:\d{2}$/)) {
+    if (!newArrivalTime.match(/^\d{2}:\d{2}:\d{2}$/)) {
       console.error("Invalid newArrivalTime format");
       return;
     }

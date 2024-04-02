@@ -10,12 +10,14 @@ function App() {
   const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
   const [flightSchedules, setFlightSchedules] = useState({});
   const [newArrivalTime, setNewArrivalTime] = useState("");
-  const onSearch = (flightNumber, includeIATCIFlights, showPassengerNames) => {
-    const formattedTime = newArrivalTime.replace(":", "");
+  const onSearch = async (flightNumber, newTime, includeIATCIFlights, showPassengerNames) => {
+    const formattedTime = newTime.replace(":", "");
     const fixedDate = "01"; // Ensure this is dynamically updated if necessary
-
+    setNewArrivalTime(newTime);
+  
+    console.log(newTime);
     const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${formattedTime}`;
-
+  
     try {
       const response = await fetch(apiURL);
       if (!response.ok) {
@@ -28,11 +30,7 @@ function App() {
       console.error("Error fetching data:", error);
       setSearchResults([]); // Handle the error state as needed
     }
-
-    setNewArrivalTime(newArrivalTime);
-
-    console.log(newTime);
-  };
+  };  
 
   const FIXED_DATE = "01";
 
@@ -64,6 +62,7 @@ function App() {
         <div className="max-w-[1200px] w-full flex flex-row">
           <FilterBar
             onSearch={onSearch}
+            searchResults={searchResults}
             flightsData={flightsData}
             onFlightSelect={handleFlightSelect}
             fixedDate={FIXED_DATE}
@@ -71,10 +70,10 @@ function App() {
           />
           <ReportSection
             newArrivalTime={newArrivalTime}
+            searchResults={searchResults}
             selectedFlightNumber={selectedFlightNumber}
             fixedDate={FIXED_DATE}
             flightSchedules={flightSchedules}
-            newArrivalTime={newArrivalTime}
             connectingFlightData={searchResults}
             connectingFlightsData={
               selectedFlightNumber
