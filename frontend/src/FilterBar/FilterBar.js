@@ -10,7 +10,7 @@ const FilterBar = ({
 }) => {
   const [flightNumber, setFlightNumber] = useState("");
   const [includeIATCIFlights, setIncludeIATCIFlights] = useState(true);
-  const [showPassengerNames, setShowPassengerNames] = useState(true);
+  const [showPassengerNames, setShowPassengerNames] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();

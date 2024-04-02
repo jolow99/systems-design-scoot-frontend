@@ -45,6 +45,8 @@ function App() {
             fixedDate={FIXED_DATE}
           />
           <ReportSection
+            selectedFlightNumber={selectedFlightNumber}
+            fixedDate={FIXED_DATE}
             connectingFlightsData={
               selectedFlightNumber
                 ? flightsData[selectedFlightNumber]?.connecting_flights

@@ -87,7 +87,13 @@ const Chart_DelayCost = ({ onSelectColumnData }) => {
   );
 };
 
-const ReportSection = ({ rows, className, connectingFlightsData }) => {
+const ReportSection = ({
+  rows,
+  className,
+  connectingFlightsData,
+  selectedFlightNumber,
+  fixedDate,
+}) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJustification, setSelectedJustification] = useState(null);
   const [remarks, setRemarks] = useState("");
@@ -172,8 +178,8 @@ const ReportSection = ({ rows, className, connectingFlightsData }) => {
       </div>
       <div className="report-metadata">
         <div>Origin City: UPG</div>
-        <div>Flight No.: 235</div>
-        <div>Flight Date: 01JAN24</div>
+        <div>Flight No.:TR{selectedFlightNumber}</div>
+        <div>Flight Date: {fixedDate} JAN</div>
       </div>
       <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
         {connectingFlightsData &&
