@@ -94,6 +94,7 @@ const ReportSection = ({
   selectedFlightNumber,
   flightSchedules,
   fixedDate,
+  newArrivalTime, //adsd this also
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJustification, setSelectedJustification] = useState(null);
@@ -271,19 +272,61 @@ const ReportSection = ({
   );
 };
 
-const Row = ({ row, onClick }) => {
-  const isDecided = row.connectedTime > 60;
+// const Row = ({ row, onClick }) => {
+//   const isDecided = row.connectedTime > 60;
+
+//   const baseClasses = "w-full border-b px-6 py-4 hover:cursor-pointer";
+//   const conditionalClasses = isDecided
+//     ? "bg-red-300 hover:bg-red-500"
+//     : "bg-white hover:bg-gray-400";
+
+//   const className = `${baseClasses} ${conditionalClasses}`;
+
+//   return (
+//     <div onClick={onClick} className={className}>
+//       {row.connectedTime}
+//     </div>
+//   );
+// };
+
+// export default ReportSection;
+
+const Row = ({ row, flightSchedules, newArrivalTime, onClick }) => {
+  // Assuming parseTime is a function that converts "HH:MM" string to a Date object
+  const parseTime = (timeString) => {
+    const [hours, minutes] = timeString.split(":").map(Number);
+    return new Date(0, 0, 0, hours, minutes);
+  };
+
+  // Ensure that flightSchedules and newArrivalTime are available and valid
+  if (!flightSchedules || !newArrivalTime) {
+    return null; // or some placeholder/error component
+  }
+
+  // Retrieve the current flight's schedule
+  const currentFlightSchedule = flightSchedules[row.flightNumber];
+
+  // Parse departure and new arrival times
+  const departureTime = parseTime(currentFlightSchedule?.departure_time);
+  const arrivalTime = parseTime(newArrivalTime);
+
+  // Calculate the difference in minutes between departure and new arrival times
+  const timeDifference = (departureTime - arrivalTime) / (60 * 1000); // Convert to minutes
+
+  // Decide if the difference is less than 60 minutes
+  const isDecided = timeDifference < 60;
 
   const baseClasses = "w-full border-b px-6 py-4 hover:cursor-pointer";
   const conditionalClasses = isDecided
     ? "bg-red-300 hover:bg-red-500"
     : "bg-white hover:bg-gray-400";
-
   const className = `${baseClasses} ${conditionalClasses}`;
 
   return (
-    <div onClick={onClick} className={className}>
-      {row.connectedTime}
+    <div onClick={() => onClick(row)} className={className}>
+      {/* ... other row content ... */}
+      <p>Flight Number: {row.flightNumber}</p>
+      {/* ... other row content ... */}
     </div>
   );
 };

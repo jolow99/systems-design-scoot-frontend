@@ -15,13 +15,7 @@ const FilterBar = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const flightNumber = document.getElementById("flightNumberSelect").value;
-    console.log(
-      flightNumber,
-      includeIATCIFlights,
-      showPassengerNames,
-      newArrivalTime
-    );
+    console.log(flightNumber, includeIATCIFlights, showPassengerNames);
     if (flightNumber.length === 0 || flightNumber.trim().length === 0) {
       return;
     }
@@ -29,7 +23,8 @@ const FilterBar = ({
       flightNumber,
       newArrivalTime,
       includeIATCIFlights,
-      showPassengerNames
+      showPassengerNames,
+      newArrivalTime
     );
   };
   console.log(flightsData);
@@ -58,7 +53,7 @@ const FilterBar = ({
             type="text"
             value={newArrivalTime}
             onChange={(e) => setNewArrivalTime(e.target.value)}
-            placeholder="HH:MM:SS"
+            placeholder="HH:MM"
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
