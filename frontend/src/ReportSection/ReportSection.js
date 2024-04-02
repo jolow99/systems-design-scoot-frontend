@@ -92,12 +92,14 @@ const ReportSection = ({
   className,
   connectingFlightsData,
   selectedFlightNumber,
+  flightSchedules,
   fixedDate,
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJustification, setSelectedJustification] = useState(null);
   const [remarks, setRemarks] = useState("");
   const [selectedColumn, setSelectedColumn] = useState(null);
+  const scheduleInfo = flightSchedules[selectedFlightNumber];
 
   const BUTTONS = {
     displayValue1: "Reurn Sector Issues",
@@ -179,6 +181,8 @@ const ReportSection = ({
       <div className="report-metadata">
         <div>Origin City: UPG</div>
         <div>Flight No.:TR{selectedFlightNumber}</div>
+        <div>Departure Country: {scheduleInfo?.departure}</div>
+        <div>Arrival Country: {scheduleInfo?.arrival}</div>
         <div>Flight Date: {fixedDate} JAN</div>
       </div>
       <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">

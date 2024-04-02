@@ -6,10 +6,9 @@ import "./App.css";
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
-  //add---
   const [flightsData, setFlightsData] = useState({});
   const [selectedFlightNumber, setSelectedFlightNumber] = useState("");
-
+  const [flightSchedules, setFlightSchedules] = useState({});
   const onSearch = (flightNumber, includeIATCIFlights, showPassengerNames) => {
     //TODO: put ur on search logic here
     //TODO: after hit api, setSearchResults with the response
@@ -17,17 +16,21 @@ function App() {
 
   const FIXED_DATE = "01";
 
-  //add---
   useEffect(() => {
-    // Simulate fetching flight data
     fetch("/connecting_flights_dictionary.json")
       .then((response) => response.json())
       .then((data) => {
-        // Assuming the structure is "01": {"flightNumber": {"connecting_flights": {...}}}
-        // and you want to use the fixed date "01"
         setFlightsData(data[FIXED_DATE]);
       })
       .catch((error) => console.error("Error fetching flights data:", error));
+    fetch("/flights_schedule_dict.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setFlightSchedules(data[FIXED_DATE]);
+      })
+      .catch((error) =>
+        console.error("Error fetching flight schedules data:", error)
+      );
   }, []);
 
   const handleFlightSelect = (flightNumber) => {
@@ -47,6 +50,7 @@ function App() {
           <ReportSection
             selectedFlightNumber={selectedFlightNumber}
             fixedDate={FIXED_DATE}
+            flightSchedules={flightSchedules}
             connectingFlightsData={
               selectedFlightNumber
                 ? flightsData[selectedFlightNumber]?.connecting_flights
