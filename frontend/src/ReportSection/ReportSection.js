@@ -90,7 +90,7 @@ const ReportSection = ({rows, className}) => {
   const [selectedColumn, setSelectedColumn] = useState(null);
 
   const BUTTONS = {
-    displayValue1: "Cost Efficient",
+    displayValue1: "Reurn Sector Issues",
     displayValue2: "FDP Issues",
     displayValue3: "Airport Curfew",
     displayValue4: "Others",
