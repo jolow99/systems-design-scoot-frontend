@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./FilterBar.css";
 
-const FilterBar = ({ className, onSearch, onFlightSelect, flightsData }) => {
+const FilterBar = ({
+  className,
+  onSearch,
+  onFlightSelect,
+  flightsData,
+  fixedDate,
+}) => {
   const [flightNumber, setFlightNumber] = useState("");
   const [includeIATCIFlights, setIncludeIATCIFlights] = useState(true);
   const [showPassengerNames, setShowPassengerNames] = useState(true);
@@ -26,7 +32,7 @@ const FilterBar = ({ className, onSearch, onFlightSelect, flightsData }) => {
             <option value="">Select a flight</option>
             {Object.keys(flightsData).map((flightNumber) => (
               <option key={flightNumber} value={flightNumber}>
-                Flight {flightNumber}
+                TR{flightNumber} {fixedDate}JAN
               </option>
             ))}
           </select>

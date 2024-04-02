@@ -165,7 +165,7 @@ const ReportSection = ({ rows, className, connectingFlightsData }) => {
         <div className="report-title">View</div>
         <div className="report-subtitle">Scoot</div>
         <div className="report-details">
-          <div>06FEB24 16</div>
+          <div>01JAN24 16</div>
           <div>Downline Passenger Report</div>
           <div>By: SHQIUB</div>
         </div>
@@ -173,7 +173,7 @@ const ReportSection = ({ rows, className, connectingFlightsData }) => {
       <div className="report-metadata">
         <div>Origin City: UPG</div>
         <div>Flight No.: 235</div>
-        <div>Flight Date: 06FEB24</div>
+        <div>Flight Date: 01JAN24</div>
       </div>
       <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
         {connectingFlightsData &&
@@ -183,9 +183,9 @@ const ReportSection = ({ rows, className, connectingFlightsData }) => {
               onClick={() => setSelectedRow(details)}
               className="w-full border-b px-6 py-4 hover:cursor-pointer"
             >
-              <p>Flight Number: {flightNum}</p>
-              <p>P2P: {details.p2p}</p>
-              <p>CP: {details.cp}</p>
+              <p>TR {flightNum}</p>
+              <p>Point to point passengers: {details.p2p}</p>
+              <p>Connecting passengers: {details.cp}</p>
               {/* Insert additional details as needed */}
             </div>
           ))}

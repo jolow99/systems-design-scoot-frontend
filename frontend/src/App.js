@@ -15,6 +15,8 @@ function App() {
     //TODO: after hit api, setSearchResults with the response
   };
 
+  const FIXED_DATE = "01";
+
   //add---
   useEffect(() => {
     // Simulate fetching flight data
@@ -23,7 +25,7 @@ function App() {
       .then((data) => {
         // Assuming the structure is "01": {"flightNumber": {"connecting_flights": {...}}}
         // and you want to use the fixed date "01"
-        setFlightsData(data["01"]);
+        setFlightsData(data[FIXED_DATE]);
       })
       .catch((error) => console.error("Error fetching flights data:", error));
   }, []);
@@ -40,6 +42,7 @@ function App() {
           <FilterBar
             flightsData={flightsData}
             onFlightSelect={handleFlightSelect}
+            fixedDate={FIXED_DATE}
           />
           <ReportSection
             connectingFlightsData={
