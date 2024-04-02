@@ -94,6 +94,7 @@ const ReportSection = ({
   selectedFlightNumber,
   flightSchedules,
   fixedDate,
+  selectedConnectingFlightNumber,
   newArrivalTime, //adsd this also
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -211,9 +212,16 @@ const ReportSection = ({
           <div className="flex flex-row w-full justify-center items-center">
             <div className="w-[500px] h-[350px] border-2 flex flex-col justify-center items-center">
               <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-                Flight: XXX
+                Flight: {flightNumber} //this should be the connecting flight
+                number
               </span>
-              <LineChart_FlightCost />
+              <LineChart_FlightCost
+                connectingFlightNumber={selectedConnectingFlightNumber} // Pass the connecting flight number to the chart
+                data={
+                  searchResults["Line"][selectedConnectingFlightNumber]?.sum ||
+                  []
+                }
+              />
             </div>
           </div>
 
