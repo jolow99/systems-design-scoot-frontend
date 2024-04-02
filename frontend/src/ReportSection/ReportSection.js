@@ -91,7 +91,6 @@ const ReportSection = ({
   rows,
   className,
   connectingFlightsData,
-  // selectedFlightNumber,
   flightNumber,
   flightSchedules,
   fixedDate,
