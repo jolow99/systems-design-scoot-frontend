@@ -234,7 +234,14 @@ const ReportSection = ({
 
           {/* TODO: display data */}
           <div className="flex flex-row justify-between items-center w-full">
-            <Chart_DelayCost onSelectColumnData={handleSelectColumnData} />
+            <Chart_DelayCost
+              onSelectColumnData={handleSelectColumnData}
+              connectingFlightNumber={selectedConnectingFlightNumber}
+              tableData={
+                searchResults["Table"]?.[selectedConnectingFlightNumber]
+                  ?.rows || []
+              }
+            />
           </div>
 
           <div className="mt-3">
