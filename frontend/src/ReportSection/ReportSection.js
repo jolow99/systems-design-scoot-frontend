@@ -91,20 +91,24 @@ const ReportSection = ({
   rows,
   className,
   connectingFlightsData,
-  selectedFlightNumber,
+  flightNumber,
   flightSchedules,
   fixedDate,
   selectedConnectingFlightNumber,
-  newArrivalTime, 
+  setSelectedConnectingFlightNumber,
+  newArrivalTime,
   searchResults,
 }) => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJustification, setSelectedJustification] = useState(null);
   const [remarks, setRemarks] = useState("");
   const [selectedColumn, setSelectedColumn] = useState(null);
-  const scheduleInfo = flightSchedules[selectedFlightNumber];
+  const scheduleInfo = flightSchedules[flightNumber];
 
-  // console.log(newArrivalTime);
+  console.log(newArrivalTime);
+  console.log(flightNumber);
+  console.log(searchResults);
+  console.log(selectedConnectingFlightNumber);
 
   const BUTTONS = {
     displayValue1: "Reurn Sector Issues",
@@ -185,26 +189,12 @@ const ReportSection = ({
       </div>
       <div className="report-metadata">
         <div>Origin City: {scheduleInfo?.departure}</div>
-        <div>Flight No:{selectedFlightNumber}</div>
+        <div>Flight No:{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
       </div>
       <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
         {connectingFlightsData &&
           Object.entries(connectingFlightsData).map(([flightNum, details]) => (
-            // <div
-            //   key={flightNum}
-            //   onClick={() => setSelectedRow(details)}
-            //   className="w-full border-b px-6 py-4 hover:cursor-pointer"
-            // >
-            //   <p>TR {flightNum}</p>
-            //   <p>Point to point passengers: {details.p2p}</p>
-            //   <p>Connecting passengers: {details.cp}</p>
-            //   <p>
-            //     Departure Time: {flightSchedules[flightNum]?.departure_time}
-            //   </p>
-            //   <p>Arrival City: {flightSchedules[flightNum]?.arrival}</p>
-            //   {/* Insert additional details as needed */}
-            // </div>
             <Row
               key={flightNum}
               flightNum={flightNum}
@@ -214,7 +204,10 @@ const ReportSection = ({
                 arrival: flightSchedules[flightNum]?.arrival,
               }}
               newArrivalTime={newArrivalTime}
-              onClick={setSelectedRow} // Pass the setSelectedRow function directly
+              onClick={() => {
+                setSelectedConnectingFlightNumber(flightNum);
+                setSelectedRow(details);
+              }}
             />
           ))}
       </div>
@@ -226,22 +219,29 @@ const ReportSection = ({
           <div className="flex flex-row w-full justify-center items-center">
             <div className="w-[500px] h-[350px] border-2 flex flex-col justify-center items-center">
               <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-                Flight: {selectedFlightNumber} //this should be the connecting flight
+                Flight: {flightNumber} //this should be the connecting flight
                 number
               </span>
               <LineChart_FlightCost
-                // connectingFlightNumber={selectedConnectingFlightNumber} // Pass the connecting flight number to the chart
-                // data={
-                //   searchResults["Line"][selectedConnectingFlightNumber]?.sum ||
-                //   []
-                // }
+                connectingFlightNumber={selectedConnectingFlightNumber}
+                costData={
+                  searchResults["Line"]?.[selectedConnectingFlightNumber]
+                    ?.sum || []
+                }
               />
             </div>
           </div>
 
           {/* TODO: display data */}
           <div className="flex flex-row justify-between items-center w-full">
-            <Chart_DelayCost onSelectColumnData={handleSelectColumnData} />
+            <Chart_DelayCost
+              onSelectColumnData={handleSelectColumnData}
+              connectingFlightNumber={selectedConnectingFlightNumber}
+              tableData={
+                searchResults["Table"]?.[selectedConnectingFlightNumber]
+                  ?.rows || []
+              }
+            />
           </div>
 
           <div className="mt-3">
@@ -312,40 +312,44 @@ const ReportSection = ({
 // };
 
 const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
-  console.log(`newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`);
+  console.log(
+    `newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`
+  );
   const timeToMinutes = (time) => {
-    if (typeof time !== 'string') {
+    if (typeof time !== "string") {
       // console.error('Invalid time format:', time);
       return null; // Return null to indicate an error
     }
-    const [hours, minutes] = time.split(':').map(Number);
+    const [hours, minutes] = time.split(":").map(Number);
     return hours * 60 + minutes;
   };
 
   const departureTimeMinutes = timeToMinutes(details.departure_time);
   const newArrivalTimeMinutes = timeToMinutes(newArrivalTime);
-  
-  console.log(`Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`);
 
-  const isAfterNewArrival = departureTimeMinutes > newArrivalTimeMinutes;
+  console.log(
+    `Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`
+  );
+
+  const isAfterNewArrival = departureTimeMinutes < newArrivalTimeMinutes;
 
   // Conditional styling based on time comparison
-  const rowClasses = `w-full border-b px-6 py-4 hover:cursor-pointer ${isAfterNewArrival ? "bg-red-200" : ""}`;
+  const rowClasses = `w-full border-b px-6 py-4 hover:cursor-pointer ${
+    isAfterNewArrival ? "bg-red-200" : ""
+  }`;
 
   return (
-    <div
-      onClick={() => onClick(details)} 
-      className={rowClasses}
-    >
+    <div onClick={() => onClick(details)} className={rowClasses}>
       <p>TR {flightNum}</p>
       <p>Point to point passengers: {details.p2p}</p>
       <p>Connecting passengers: {details.cp}</p>
       <p>Departure Time: {details.departure_time}</p>
       <p>Arrival City: {details.arrival}</p>
-      {isAfterNewArrival && <p className="text-red-500">Departs after new arrival time</p>}
+      {isAfterNewArrival && (
+        <p className="text-red-500">Delay decision required</p>
+      )}
     </div>
   );
 };
-
 
 export default ReportSection;

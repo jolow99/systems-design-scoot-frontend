@@ -4,7 +4,7 @@ import "./FilterBar.css";
 const FilterBar = ({
   className,
   onSearch,
-  onFlightSelect,
+  // onFlightSelect,
   flightsData,
   fixedDate,
 }) => {
@@ -48,7 +48,7 @@ const FilterBar = ({
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label className="font-semibold text-gray-700">Flight:</label>
-          <select onChange={(e) => { setFlightNumber(e.target.value); onFlightSelect(e.target.value); }}>
+          <select onChange={(e) => { setFlightNumber(e.target.value) }}>
             <option value="">Select a flight</option>
             {Object.keys(flightsData).map((flightNumber) => (
               <option key={flightNumber} value={flightNumber}>
