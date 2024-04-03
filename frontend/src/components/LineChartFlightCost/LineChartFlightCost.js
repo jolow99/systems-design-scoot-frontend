@@ -152,7 +152,7 @@ export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
             beginAtZero: true,
             stepSize: 50,
           },
-          padding: { top: 0, left: 0, right: 0, bottom: 10 },
+          padding: { top: 0, left: 0, right: 0, bottom: 5 },
         },
         beginAtZero: true,
       },
@@ -167,7 +167,7 @@ export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
   };
 
   return (
-    <div style={{ position: "relative", height: "230px", width: "450px" }}>
+    <div style={{ position: "relative", height: "250px", width: "450px" }}>
       <Line data={data} options={options} />
       <CustomLegend data={data} />
     </div>

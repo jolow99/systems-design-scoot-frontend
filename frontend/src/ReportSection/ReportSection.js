@@ -4,7 +4,7 @@ import "./ReportSection.css";
 import Modal from "../components/modal";
 import { LineChart_FlightCost } from "../components/LineChartFlightCost";
 
-const Chart_DelayCost = ({ onSelectColumnData }) => {
+const Chart_DelayCost = ({ onSelectColumnData, tableData }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);
 
@@ -12,16 +12,6 @@ const Chart_DelayCost = ({ onSelectColumnData }) => {
     setSelectedOption(option);
     setSelectedColumn(option);
     onSelectColumnData(option);
-  };
-
-  const data = {
-    rows: [
-      { name: "Satisfaction", noDelay: 10000, delay: 10000 },
-      { name: "Labour", noDelay: 10000, delay: 10000 },
-      { name: "Reimbursement", noDelay: 10000, delay: 10000 },
-      { name: "Downstream", noDelay: 0, delay: 10000 },
-      { name: "Total", noDelay: 30000, delay: 40000 },
-    ],
   };
 
   return (
@@ -45,7 +35,7 @@ const Chart_DelayCost = ({ onSelectColumnData }) => {
           </tr>
         </thead>
         <tbody>
-          {data.rows.map((row, index) => (
+          {tableData.map((row, index) => (
             <tr key={index}>
               <td>{row.name}</td>
               <td className={selectedColumn === "noDelay" ? "highlight" : ""}>
@@ -105,10 +95,10 @@ const ReportSection = ({
   const [selectedColumn, setSelectedColumn] = useState(null);
   const scheduleInfo = flightSchedules[flightNumber];
 
-  console.log(newArrivalTime);
-  console.log(flightNumber);
-  console.log(searchResults);
-  console.log(selectedConnectingFlightNumber);
+  // console.log(newArrivalTime);
+  // console.log(flightNumber);
+  // console.log(searchResults);
+  // console.log(selectedConnectingFlightNumber);
 
   const BUTTONS = {
     displayValue1: "Reurn Sector Issues",
@@ -241,6 +231,8 @@ const ReportSection = ({
                   ?.rows || []
               }
             />
+            {console.log(searchResults["Table"]?.[selectedConnectingFlightNumber]
+                ?.rows || [])}
           </div>
 
           <div className="mt-3">
@@ -294,9 +286,9 @@ const ReportSection = ({
 };
 
 const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
-  console.log(
-    `newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`
-  );
+  // console.log(
+  //   `newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`
+  // );
   const timeToMinutes = (time) => {
     if (typeof time !== "string") {
       return null; 
@@ -308,9 +300,9 @@ const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
   const departureTimeMinutes = timeToMinutes(details.departure_time);
   const newArrivalTimeMinutes = timeToMinutes(newArrivalTime);
 
-  console.log(
-    `Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`
-  );
+  // console.log(
+  //   `Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`
+  // );
 
   // const isAfterNewArrival = departureTimeMinutes < newArrivalTimeMinutes;
   const isAfterNewArrival = newArrivalTimeMinutes > departureTimeMinutes;
