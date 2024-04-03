@@ -331,11 +331,13 @@ const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
     `Converted departureTime: ${departureTimeMinutes}, Converted newArrivalTime: ${newArrivalTimeMinutes}`
   );
 
-  const isAfterNewArrival = departureTimeMinutes < newArrivalTimeMinutes;
+  // const isAfterNewArrival = departureTimeMinutes < newArrivalTimeMinutes;
+  const isAfterNewArrival = newArrivalTimeMinutes > departureTimeMinutes;
+  const isWithinMCT = departureTimeMinutes - newArrivalTimeMinutes  >= 60;
 
   // Conditional styling based on time comparison
   const rowClasses = `w-full border-b px-6 py-4 hover:cursor-pointer ${
-    isAfterNewArrival ? "bg-red-200" : ""
+    isAfterNewArrival || !isWithinMCT ? "bg-red-200" : ""
   }`;
 
   return (
@@ -345,7 +347,7 @@ const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
       <p>Connecting passengers: {details.cp}</p>
       <p>Departure Time: {details.departure_time}</p>
       <p>Arrival City: {details.arrival}</p>
-      {isAfterNewArrival && (
+      {(isAfterNewArrival || !isWithinMCT) && (
         <p className="text-red-500">Delay decision required</p>
       )}
     </div>
