@@ -219,8 +219,7 @@ const ReportSection = ({
           <div className="flex flex-row w-full justify-center items-center">
             <div className="w-[500px] h-[350px] border-2 flex flex-col justify-center items-center">
               <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-                Flight: {flightNumber} //this should be the connecting flight
-                number
+                Flight: TR{selectedConnectingFlightNumber}
               </span>
               <LineChart_FlightCost
                 connectingFlightNumber={selectedConnectingFlightNumber}
@@ -294,31 +293,13 @@ const ReportSection = ({
   );
 };
 
-// const Row = ({ row, onClick }) => {
-//   const isDecided = row.connectedTime > 60;
-
-//   const baseClasses = "w-full border-b px-6 py-4 hover:cursor-pointer";
-//   const conditionalClasses = isDecided
-//     ? "bg-red-300 hover:bg-red-500"
-//     : "bg-white hover:bg-gray-400";
-
-//   const className = `${baseClasses} ${conditionalClasses}`;
-
-//   return (
-//     <div onClick={onClick} className={className}>
-//       {row.connectedTime}
-//     </div>
-//   );
-// };
-
 const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
   console.log(
     `newArrivalTime: ${newArrivalTime}, departure_time: ${details.departure_time}`
   );
   const timeToMinutes = (time) => {
     if (typeof time !== "string") {
-      // console.error('Invalid time format:', time);
-      return null; // Return null to indicate an error
+      return null; 
     }
     const [hours, minutes] = time.split(":").map(Number);
     return hours * 60 + minutes;
