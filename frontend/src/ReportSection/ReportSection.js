@@ -115,13 +115,14 @@ const ReportSection = ({
   // TODO: on submit generate csv file
   const handleOnSubmit = () => {
     const formData = {
-      rows: [
-        { name: "Satisfaction", noDelay: 10000, delay: 10000 },
-        { name: "Labour", noDelay: 10000, delay: 10000 },
-        { name: "Reimbursement", noDelay: 10000, delay: 10000 },
-        { name: "Downstream", noDelay: 0, delay: 10000 },
-        { name: "Total", noDelay: 30000, delay: 40000 },
-      ],
+      // rows: [
+      //   { name: "Satisfaction", noDelay: 10000, delay: 10000 },
+      //   { name: "Labour", noDelay: 10000, delay: 10000 },
+      //   { name: "Reimbursement", noDelay: 10000, delay: 10000 },
+      //   { name: "Downstream", noDelay: 0, delay: 10000 },
+      //   { name: "Total", noDelay: 30000, delay: 40000 },
+      // ],
+      rows: searchResults["Table"]?.[selectedConnectingFlightNumber]?.rows || []
     };
 
     const highlightColumn = selectedColumn;
@@ -157,10 +158,13 @@ const ReportSection = ({
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
 
+    // Modify the filename to include the flight number
+    const filename = `delayReport_TR${selectedConnectingFlightNumber}.csv`;
+
     // Create a link and trigger the download
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", "delayReport.csv");
+    link.setAttribute("download", filename);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

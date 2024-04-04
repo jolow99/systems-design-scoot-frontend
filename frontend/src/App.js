@@ -15,6 +15,11 @@ function App() {
   const [flightSchedules, setFlightSchedules] = useState({});
   const [newArrivalTime, setNewArrivalTime] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
+  const [selectedColumn, setSelectedColumn] = useState(null);
+  const [selectedJustification, setSelectedJustification] = useState(null);
+  const [remarks, setRemarks] = useState("");
+  const [tableData, setTableData] = useState([]);
+  
   const onSearch = async (
     flightNumber,
     newTime,
@@ -88,6 +93,10 @@ function App() {
             connectingFlightsData={
               flightNumber ? flightsData[flightNumber]?.connecting_flights : {}
             }
+            selectedColumn={selectedColumn}
+            selectedJustification={selectedJustification}
+            remarks={remarks}
+            tableData={tableData}
           />
         </div>
       </div>
