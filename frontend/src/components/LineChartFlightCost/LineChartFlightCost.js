@@ -138,7 +138,7 @@ export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
       },
       y: {
         min: 0,
-        max: maxValue,
+        max: maxValue+10000,
         title: {
           display: true,
           text: "Cost ($)",
@@ -158,6 +158,10 @@ export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
       },
     },
     plugins: {
+      tooltip: {
+        mode: 'index',
+        intersect: false, 
+      },
       legend: {
         display: false,
       },

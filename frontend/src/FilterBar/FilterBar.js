@@ -40,14 +40,40 @@ const FilterBar = ({
       showPassengerNames,
     );
   };
+
+  const handleTimeChange = (e) => {
+    const { value } = e.target;
+    let newValue = value.replace(/[^\d:]/g, ''); // Allow numbers and colon
+    // Remove leading colon if any
+    if (newValue.startsWith(':')) {
+      newValue = newValue.slice(1);
+    }
+  
+    // Handling backspace with a colon present
+    if (newArrivalTime.length === 3 && value.length === 2) {
+      // User is likely trying to delete the colon
+      newValue = newValue.slice(0, 1); // Keep only the first number
+    } else if (newValue.length === 2 && !newArrivalTime.endsWith(":")) {
+      // Automatically add colon if two digits are entered consecutively
+      newValue += ':';
+    } else if (newValue.length > 2) {
+      // Ensure correct formatting with colon after backspacing
+      newValue = newValue.slice(0, 2) + ':' + newValue.slice(2).replace(/:/g, '');
+    }
+    
+    setNewArrivalTime(newValue.substring(0, 5)); // Limit to HH:MM format
+  };
+  
+
   // console.log(flightsData);
   return (
     <div
-      className={`filter-bar bg-gray-50 p-4 rounded-lg shadow w-full ${className}`}
+      className={`filter-bar bg-gray-50 p-4 rounded-lg shadow-md w-1/2 ${className}`}
     >
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="flex flex-col">
-          <label className="font-semibold text-gray-700">Flight:</label>
+          <label className="font-semibold text-gray-700 text-lg">Flight:</label>
+          <label className="font-semibold text-gray-700 text-left text-lg">Parameters</label>
           <select onChange={(e) => { setFlightNumber(e.target.value) }}>
             <option value="">Select a flight</option>
             {Object.keys(flightsData).map((flightNumber) => (
@@ -65,8 +91,10 @@ const FilterBar = ({
           <input
             type="text"
             value={newArrivalTime}
-            onChange={(e) => setNewArrivalTime(e.target.value)}
+            // onChange={(e) => setNewArrivalTime(e.target.value)}
+            onChange={handleTimeChange}
             placeholder="HH:MM"
+            maxLength="5"
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
           />
         </div>

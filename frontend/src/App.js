@@ -31,7 +31,7 @@ function App() {
     setFlightNumber(flightNumber);
     console.log(newTime);
     const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}`;
-
+    console.log(apiURL);
     try {
       const response = await fetch(apiURL);
       if (!response.ok) {
