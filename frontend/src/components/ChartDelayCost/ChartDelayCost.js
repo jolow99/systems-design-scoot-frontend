@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 
-export const Chart_DelayCost = () => {
+const ChartDelayCost = ({ onSelectColumnData, connectingFlightNumber, tableData }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);
 
