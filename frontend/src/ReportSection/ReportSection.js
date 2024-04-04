@@ -248,6 +248,7 @@ const ReportSection = ({
                         : "#f9f9f9",
                     color:
                       BUTTONS[key] === selectedJustification ? "#fff" : "#000",
+                    fontWeight: BUTTONS[key] === selectedJustification ? "bold" : "normal",
                   }}
                 >
                   {BUTTONS[key]}
