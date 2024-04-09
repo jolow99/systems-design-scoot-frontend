@@ -123,20 +123,29 @@ const ReportSection = ({
 
   const handleOnSubmit = async () => {
     console.log('submitting data to Airtable');
-    const formData = {
-      rows: searchResults["Table"]?.[selectedConnectingFlightNumber]?.rows || [],
-    };
+    
+    // const formData = {
+    //   rows: tableData,
+    // };
     var base = new Airtable({apiKey: apiKey}).base(baseID);
     // TO DO: link to api data
     base('Table 1').create([
       {
         "fields": {
-          "flight_number": "1234",
-          "no_delay_cost": "1000",
-          "delay_cost": "2000",
-          "remarks": "These are remarks",
-          "justification": "This is the justification"
-        }
+          "flight_number": flightNumber,
+          "no_delay_operational_cost": tableData.find(item => item.name === "operational_cost").noDelay.toString(),
+          "delay_operational_cost": tableData.find(item => item.name === "operational_cost").delay.toString(),
+          "no_delay_satisfaction_cost": tableData.find(item => item.name === "satisfaction_cost").noDelay.toString(),
+          "delay_satisfaction_cost": tableData.find(item => item.name === "satisfaction_cost").delay.toString(),
+          "no_delay_reimbursement_cost": tableData.find(item => item.name === "reimbursement_cost").noDelay.toString(),
+          "delay_reimbursement_cost": tableData.find(item => item.name === "reimbursement_cost").delay.toString(),
+          "no_delay_downstream_cost": tableData.find(item => item.name === "downstream_cost").noDelay.toString(),
+          "delay_downstream_cost": tableData.find(item => item.name === "downstream_cost").delay.toString(),
+          "no_delay_total_cost": tableData.find(item => item.name === "total_cost").noDelay.toString(),
+          "delay_total_cost": tableData.find(item => item.name === "total_cost").delay.toString(),
+          "remarks": remarks,
+          "justification": selectedJustification,
+        }        
       },
     ], function(err, records) {
       if (err) {
