@@ -123,12 +123,8 @@ const ReportSection = ({
 
   const handleOnSubmit = async () => {
     console.log('submitting data to Airtable');
-    
-    // const formData = {
-    //   rows: tableData,
-    // };
+
     var base = new Airtable({apiKey: apiKey}).base(baseID);
-    // TO DO: link to api data
     base('Table 1').create([
       {
         "fields": {
@@ -143,6 +139,7 @@ const ReportSection = ({
           "delay_downstream_cost": tableData.find(item => item.name === "downstream_cost").delay.toString(),
           "no_delay_total_cost": tableData.find(item => item.name === "total_cost").noDelay.toString(),
           "delay_total_cost": tableData.find(item => item.name === "total_cost").delay.toString(),
+          "decision": selectedColumn,
           "remarks": remarks,
           "justification": selectedJustification,
         }        
@@ -155,6 +152,7 @@ const ReportSection = ({
       records.forEach(function (record) {
         console.log(record.getId());
       });
+      setSelectedRow(null);
     });
   };
 
