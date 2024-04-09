@@ -68,9 +68,9 @@ function App() {
       );
   }, []);
 
-  console.log("on Amdin")
-  console.log(onAdmin)
-  console.log(setOnAdmin)
+  // console.log("on Amdin")
+  // console.log(onAdmin)
+  // console.log(setOnAdmin)
 
   return (
     <div className="App w-screen h-screen">
@@ -82,7 +82,6 @@ function App() {
           onSearch={onSearch}
           searchResults={searchResults}
           flightsData={flightsData}
-          // onFlightSelect={handleFlightSelect}
           fixedDate={FIXED_DATE}
           newArrivalTime={newArrivalTime}
           flightNumber={flightNumber}
@@ -108,10 +107,7 @@ function App() {
         />
       </div>
     </div>
-      
-      
       } 
-      {/*  */}
     </div>
   );
 }
