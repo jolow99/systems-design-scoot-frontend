@@ -74,7 +74,7 @@ function App() {
 
   return (
     <div className="App w-screen h-screen">
-      <Header setOnAdmin={setOnAdmin} />
+      <Header setOnAdmin={setOnAdmin} onAdmin={onAdmin} />
       {onAdmin ? <AdminSection /> : 
       <div className="flex flex-row justify-center w-full mt-4 max-h-full">
       <div className="max-w-[1200px] w-full flex flex-row">
