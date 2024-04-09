@@ -3,6 +3,14 @@ import "./delayCostChartStyle.css";
 import "./ReportSection.css";
 import Modal from "../components/modal";
 import { LineChart_FlightCost } from "../components/LineChartFlightCost";
+import axios from 'axios';
+
+const baseID = 'app6jwabQc7oAiKOz';
+const tableName = 'tblTqWNfklvo3A3B5';
+const apiKey = 'patyshrIvDewX5ttf.cd7f9555627cd562cb47a10102e29ae66bbca96b9cec612e8e574ff7bb8be952';
+const Airtable = require('airtable');
+const airtableEndpoint = `https://api.airtable.com/v0/${baseID}/${tableName}`;
+// const axios = require('axios');
 
 const Chart_DelayCost = ({ onSelectColumnData, tableData }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -110,51 +118,115 @@ const ReportSection = ({
     console.log(`Selected Column: ${column}`);
   };
 
-  const handleOnSubmit = () => {
+  // const handleOnSubmit = () => {
+  //   const formData = {
+  //     rows: searchResults["Table"]?.[selectedConnectingFlightNumber]?.rows || []
+  //   };
+
+  //   const highlightColumn = selectedColumn;
+  //   const formJustification = selectedJustification;
+  //   const formRemarks = remarks;
+  //   const headers = [
+  //     "Cost Category",
+  //     highlightColumn === "noDelay" ? "No Delay ($)**" : "No Delay ($)",
+  //     highlightColumn === "delay" ? "Delay ($)**" : "Delay ($)",
+  //   ];
+
+  //   const rowsCsv = formData.rows.map((row) =>
+  //     [
+  //       row.name,
+  //       highlightColumn === "noDelay" ? `${row.noDelay}**` : row.noDelay,
+  //       highlightColumn === "delay" ? `${row.delay}**` : row.delay,
+  //     ].join(",")
+  //   );
+
+  //   const selectedDecisionNote = `"** indicates the selected decision"`;
+
+  //   const csvContent = [
+  //     headers.join(","),
+  //     ...rowsCsv,
+  //     "",
+  //     "Justification," + formJustification,
+  //     "Remarks," + formRemarks,
+  //     "",
+  //     selectedDecisionNote,
+  //   ].join("\n");
+
+  //   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  //   const url = URL.createObjectURL(blob);
+
+  //   const filename = `delayReport_TR${selectedConnectingFlightNumber}.csv`;
+
+  //   const link = document.createElement("a");
+  //   link.href = url;
+  //   link.setAttribute("download", filename);
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
+
+  const handleOnSubmit = async () => {
+    console.log('submitting data to Airtable');
     const formData = {
-      rows: searchResults["Table"]?.[selectedConnectingFlightNumber]?.rows || []
+      rows: searchResults["Table"]?.[selectedConnectingFlightNumber]?.rows || [],
     };
+    var base = new Airtable({apiKey: apiKey}).base(baseID);
 
-    const highlightColumn = selectedColumn;
-    const formJustification = selectedJustification;
-    const formRemarks = remarks;
-    const headers = [
-      "Cost Category",
-      highlightColumn === "noDelay" ? "No Delay ($)**" : "No Delay ($)",
-      highlightColumn === "delay" ? "Delay ($)**" : "Delay ($)",
-    ];
-
-    const rowsCsv = formData.rows.map((row) =>
-      [
-        row.name,
-        highlightColumn === "noDelay" ? `${row.noDelay}**` : row.noDelay,
-        highlightColumn === "delay" ? `${row.delay}**` : row.delay,
-      ].join(",")
-    );
-
-    const selectedDecisionNote = `"** indicates the selected decision"`;
-
-    const csvContent = [
-      headers.join(","),
-      ...rowsCsv,
-      "",
-      "Justification," + formJustification,
-      "Remarks," + formRemarks,
-      "",
-      selectedDecisionNote,
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-
-    const filename = `delayReport_TR${selectedConnectingFlightNumber}.csv`;
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    base('Table 1').create([
+      {
+        "fields": {
+          "flight_number": "1234",
+          "no_delay_cost": "1000",
+          "delay_cost": "2000",
+          "remarks": "These are remarks",
+          "justification": "This is the justification"
+        }
+      },
+    ], function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function (record) {
+        console.log(record.getId());
+      });
+    });
+  
+    // // Convert formData to match Airtable fields
+    // const records = formData.rows.map(row => ({
+    //   fields: {
+    //     Name: row.name,
+    //     NoDelay: row.noDelay,
+    //     Delay: row.delay,
+    //     Justification: selectedJustification,
+    //     Remarks: remarks,
+    //   }
+    //   // fields: {
+    //   //   Name: 'row.name',
+    //   //   NoDelay: 'row.noDelay',
+    //   //   Delay: 'row.delay',
+    //   //   Justification: 'selectedJustification',
+    //   //   Remarks: 'remarks',
+    //   // }
+    // }));
+  
+  //   try {
+  //     const response = await axios({
+  //       method: 'post',
+  //       url: airtableEndpoint,
+  //       headers: {
+  //         'Authorization': `Bearer ${apiKey}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //       data: {
+  //         records,
+  //       },
+  //     });
+  
+  //     console.log('Data successfully saved to Airtable:', response.data);
+  //   } catch (error) {
+  //     console.error('Error saving data to Airtable:', error.message);
+  //   }
   };
 
   return (
