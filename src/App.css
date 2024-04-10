@@ -15,3 +15,22 @@
     margin-left: 0;
   }
 }
+
+.flight-basic-info {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.flight-basic-info:hover {
+  background-color: #f0f0f0;
+}
+
+.flight-detailed-info {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
