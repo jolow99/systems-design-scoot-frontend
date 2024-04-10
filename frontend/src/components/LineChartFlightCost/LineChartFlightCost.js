@@ -22,42 +22,62 @@ ChartJS.register(
   Legend
 );
 
-export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
-  const noDelayCostData = Array(costData.length).fill(costData[0] || 0);
-  // Dummy data for the chart
+export const LineChart_FlightCost = ({ costData }) => { 
+  // Assuming a time increment of 5 minutes between each data point
+  const timeIncrement = 1;
+  
+  // Assuming all cost arrays are of equal length and using the first one to determine labels
+  const firstCostTypeKey = Object.keys(costData)[0];
+  const numberOfPoints = costData[firstCostTypeKey]?.length || 0;
+  const labels = Array.from({ length: numberOfPoints }, (_, index) => `${index * timeIncrement} min`);
+
   const data = {
-    labels: [
-      "0 min",
-      "5 min",
-      "10 min",
-      "15 min",
-      "20 min",
-      "25 min",
-      "30 min",
-      "35 min",
-      "40 min",
-      "45 min",
-      "50 min",
-      "55 min",
-      "60 min",
-    ],
+    labels,
     datasets: [
+      // {
+      //   label: 'Downstream Cost',
+      //   data: costData.downstream_cost,
+      //   borderColor: 'rgb(255, 99, 132)',
+      //   backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      // },
+      // {
+      //   label: 'Operational Cost',
+      //   data: costData.operational_cost,
+      //   borderColor: 'rgb(53, 162, 235)',
+      //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      // },
+      // {
+      //   label: 'Reimbursement Cost',
+      //   data: costData.reimbursement_cost,
+      //   borderColor: 'rgb(75, 192, 192)',
+      //   backgroundColor: 'rgba(75, 192, 192, 0.5)',
+      // },
+      // {
+      //   label: 'Satisfaction Cost',
+      //   data: costData.satisfaction_cost,
+      //   borderColor: 'rgb(255, 205, 86)',
+      //   backgroundColor: 'rgba(255, 205, 86, 0.5)',
+      // },
       {
-        label: "No Delay Cost",
-        data: noDelayCostData,
-        fill: false,
-        backgroundColor: "#EE5757",
-        borderColor: "#EE5757",
-        hoverBackgroundColor: "#FF7171",
-      },
-      {
-        label: "Delay Cost",
-        data: costData,
+        label: 'Delay Cost',
+        data: costData.total_cost,
         fill: false,
         backgroundColor: "#1679DB",
         borderColor: "#1679DB",
         hoverBackgroundColor: "#3199FF",
+        borderWidth: 3,
+        pointRadius: 0,
       },
+      {
+        label: 'No Delay Cost',
+        data: Array.from({ length: numberOfPoints }, (_, index) => costData[firstCostTypeKey][index]),
+        fill: false,
+        backgroundColor: "#EE5757",
+        borderColor: "#EE5757",
+        hoverBackgroundColor: "#FF7171",
+        borderWidth: 3,
+        pointRadius: 0,
+      }
     ],
   };
 
@@ -138,7 +158,7 @@ export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
       },
       y: {
         min: 0,
-        max: maxValue,
+        max: maxValue+10000,
         title: {
           display: true,
           text: "Cost ($)",
@@ -158,6 +178,10 @@ export const LineChart_FlightCost = ({ connectingFlightNumber, costData }) => {
       },
     },
     plugins: {
+      tooltip: {
+        mode: 'index',
+        intersect: false, 
+      },
       legend: {
         display: false,
       },

@@ -4,7 +4,6 @@ import "./FilterBar.css";
 const FilterBar = ({
   className,
   onSearch,
-  // onFlightSelect,
   flightsData,
   fixedDate,
 }) => {
@@ -16,18 +15,13 @@ const FilterBar = ({
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(flightNumber, includeIATCIFlights, showPassengerNames);
-    // if (flightNumber.length === 0 || flightNumber.trim().length === 0) {
-    //   return;
-    // }
 
-    // Validate newArrivalTime format
     if (!newArrivalTime.match(/^\d{2}:\d{2}$/)) {
       console.error("Invalid newArrivalTime format");
       return;
     }
 
     console.log(flightNumber);
-    // Check if flightNumber is provided
     if (flightNumber.trim().length === 0) {
       console.error("Flight number is required");
       return;
@@ -40,14 +34,34 @@ const FilterBar = ({
       showPassengerNames,
     );
   };
-  // console.log(flightsData);
+
+  const handleTimeChange = (e) => {
+    const { value } = e.target;
+    let newValue = value.replace(/[^\d:]/g, ''); 
+    if (newValue.startsWith(':')) {
+      newValue = newValue.slice(1);
+    }
+  
+    if (newArrivalTime.length === 3 && value.length === 2) {
+      newValue = newValue.slice(0, 1); 
+    } else if (newValue.length === 2 && !newArrivalTime.endsWith(":")) {
+      newValue += ':';
+    } else if (newValue.length > 2) {
+      newValue = newValue.slice(0, 2) + ':' + newValue.slice(2).replace(/:/g, '');
+    }
+    
+    setNewArrivalTime(newValue.substring(0, 5)); 
+  };
+  
+
   return (
     <div
-      className={`filter-bar bg-gray-50 p-4 rounded-lg shadow w-full ${className}`}
+      className={`filter-bar bg-gray-50 p-4 rounded-lg shadow-md w-1/2 ${className}`}
     >
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="flex flex-col">
-          <label className="font-semibold text-gray-700">Flight:</label>
+          <label className="font-semibold text-gray-700 text-lg">Flight:</label>
+          <label className="font-semibold text-gray-700 text-left text-lg">Parameters</label>
           <select onChange={(e) => { setFlightNumber(e.target.value) }}>
             <option value="">Select a flight</option>
             {Object.keys(flightsData).map((flightNumber) => (
@@ -65,8 +79,10 @@ const FilterBar = ({
           <input
             type="text"
             value={newArrivalTime}
-            onChange={(e) => setNewArrivalTime(e.target.value)}
+            // onChange={(e) => setNewArrivalTime(e.target.value)}
+            onChange={handleTimeChange}
             placeholder="HH:MM"
+            maxLength="5"
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
