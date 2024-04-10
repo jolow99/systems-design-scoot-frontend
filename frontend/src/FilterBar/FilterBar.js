@@ -4,7 +4,6 @@ import "./FilterBar.css";
 const FilterBar = ({
   className,
   onSearch,
-  // onFlightSelect,
   flightsData,
   fixedDate,
 }) => {
@@ -16,18 +15,13 @@ const FilterBar = ({
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(flightNumber, includeIATCIFlights, showPassengerNames);
-    // if (flightNumber.length === 0 || flightNumber.trim().length === 0) {
-    //   return;
-    // }
 
-    // Validate newArrivalTime format
     if (!newArrivalTime.match(/^\d{2}:\d{2}$/)) {
       console.error("Invalid newArrivalTime format");
       return;
     }
 
     console.log(flightNumber);
-    // Check if flightNumber is provided
     if (flightNumber.trim().length === 0) {
       console.error("Flight number is required");
       return;
@@ -43,29 +37,23 @@ const FilterBar = ({
 
   const handleTimeChange = (e) => {
     const { value } = e.target;
-    let newValue = value.replace(/[^\d:]/g, ''); // Allow numbers and colon
-    // Remove leading colon if any
+    let newValue = value.replace(/[^\d:]/g, ''); 
     if (newValue.startsWith(':')) {
       newValue = newValue.slice(1);
     }
   
-    // Handling backspace with a colon present
     if (newArrivalTime.length === 3 && value.length === 2) {
-      // User is likely trying to delete the colon
-      newValue = newValue.slice(0, 1); // Keep only the first number
+      newValue = newValue.slice(0, 1); 
     } else if (newValue.length === 2 && !newArrivalTime.endsWith(":")) {
-      // Automatically add colon if two digits are entered consecutively
       newValue += ':';
     } else if (newValue.length > 2) {
-      // Ensure correct formatting with colon after backspacing
       newValue = newValue.slice(0, 2) + ':' + newValue.slice(2).replace(/:/g, '');
     }
     
-    setNewArrivalTime(newValue.substring(0, 5)); // Limit to HH:MM format
+    setNewArrivalTime(newValue.substring(0, 5)); 
   };
   
 
-  // console.log(flightsData);
   return (
     <div
       className={`filter-bar bg-gray-50 p-4 rounded-lg shadow-md w-1/2 ${className}`}

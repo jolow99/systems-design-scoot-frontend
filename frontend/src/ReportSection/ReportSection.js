@@ -3,13 +3,11 @@ import "./delayCostChartStyle.css";
 import "./ReportSection.css";
 import Modal from "../components/modal";
 import { LineChart_FlightCost } from "../components/LineChartFlightCost";
-import axios from 'axios';
 
 const baseID = 'app6jwabQc7oAiKOz';
 const tableName = 'tblTqWNfklvo3A3B5';
 const apiKey = 'patyshrIvDewX5ttf.cd7f9555627cd562cb47a10102e29ae66bbca96b9cec612e8e574ff7bb8be952';
 const Airtable = require('airtable');
-// const airtableEndpoint = `https://api.airtable.com/v0/${baseID}/${tableName}`;
 
 const Chart_DelayCost = ({ onSelectColumnData, tableData }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -83,7 +81,7 @@ const Chart_DelayCost = ({ onSelectColumnData, tableData }) => {
 };
 
 const ReportSection = ({
-  rows,
+  // rows,
   className,
   connectingFlightsData,
   flightNumber,
@@ -106,7 +104,7 @@ const ReportSection = ({
   // console.log(flightNumber);
   // console.log(searchResults);
   // console.log(selectedConnectingFlightNumber);
-  // console.log(costData)
+  console.log(costData)
   console.log(tableData);
 
   const BUTTONS = {
@@ -172,26 +170,27 @@ const ReportSection = ({
         <div>Flight No: TR{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
       </div>
-      <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
-        {connectingFlightsData &&
-          Object.entries(connectingFlightsData).map(([flightNum, details]) => (
-            <Row
-              key={flightNum}
-              flightNum={flightNum}
-              details={{
-                ...details,
-                departure_time: flightSchedules[flightNum]?.departure_time,
-                arrival: flightSchedules[flightNum]?.arrival,
-              }}
-              newArrivalTime={newArrivalTime}
-              onClick={() => {
-                setSelectedConnectingFlightNumber(flightNum);
-                setSelectedRow(details);
-              }}
-            />
-          ))}
-      </div>
-
+      {costData && tableData && (
+        <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
+          {connectingFlightsData &&
+            Object.entries(connectingFlightsData).map(([flightNum, details]) => (
+              <Row
+                key={flightNum}
+                flightNum={flightNum}
+                details={{
+                  ...details,
+                  departure_time: flightSchedules[flightNum]?.departure_time,
+                  arrival: flightSchedules[flightNum]?.arrival,
+                }}
+                newArrivalTime={newArrivalTime}
+                onClick={() => {
+                  setSelectedConnectingFlightNumber(flightNum);
+                  setSelectedRow(details);
+                }}
+              />
+            ))}
+        </div>
+      )}
       <div className="end-of-report">End of report</div>
       <Modal isOpen={selectedRow} onClose={() => setSelectedRow(null)}>
         <div className="p-8 flex flex-col w-full">

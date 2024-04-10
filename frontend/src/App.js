@@ -26,12 +26,12 @@ function App() {
     flightNumber,
     newTime,
     includeIATCIFlights,
-    showPassengerNames
+    showPassengerNames,
   ) => {
     const fixedDate = "01"; // Ensure this is dynamically updated if necessary
     setNewArrivalTime(newTime);
     setFlightNumber(flightNumber);
-    console.log(newTime);
+    // console.log(newTime);
     const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}/False`;
     console.log(apiURL);
     try {
@@ -41,7 +41,6 @@ function App() {
       }
       const data = await response.json();
       console.log(data);
-      // Store the entire response for later use
       setSearchResults(data);
     } catch (error) {
       console.error("Error fetching data:", error);
