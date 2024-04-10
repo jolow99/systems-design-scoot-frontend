@@ -4,8 +4,10 @@ import FilterBar from "./FilterBar/FilterBar";
 import ReportSection from "./ReportSection/ReportSection";
 import "./App.css";
 import AdminSection from "./adminSection/adminSection";
+import { useReadyState } from './ReadyStateContext';
 
 function App() {
+  const { makeReady } = useReadyState();
   const [onAdmin, setOnAdmin] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [flightsData, setFlightsData] = useState({});
@@ -42,6 +44,7 @@ function App() {
       const data = await response.json();
       console.log(data);
       setSearchResults(data);
+      makeReady();
     } catch (error) {
       console.error("Error fetching data:", error);
       setSearchResults([]); 

@@ -3,6 +3,7 @@ import "./delayCostChartStyle.css";
 import "./ReportSection.css";
 import Modal from "../components/modal";
 import { LineChart_FlightCost } from "../components/LineChartFlightCost";
+import { useReadyState } from '../ReadyStateContext';
 
 const baseID = 'app6jwabQc7oAiKOz';
 const tableName = 'tblTqWNfklvo3A3B5';
@@ -92,6 +93,7 @@ const ReportSection = ({
   newArrivalTime,
   searchResults,
 }) => {
+  const { isReady } = useReadyState();
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedJustification, setSelectedJustification] = useState(null);
   const [remarks, setRemarks] = useState("");
@@ -170,7 +172,7 @@ const ReportSection = ({
         <div>Flight No: TR{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
       </div>
-      {costData && tableData && (
+      {isReady && (
         <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
           {connectingFlightsData &&
             Object.entries(connectingFlightsData).map(([flightNum, details]) => (
