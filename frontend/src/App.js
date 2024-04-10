@@ -7,7 +7,7 @@ import AdminSection from "./adminSection/adminSection";
 import { useReadyState } from './ReadyStateContext';
 
 function App() {
-  const { makeReady } = useReadyState();
+  const { makeReady, resetReady } = useReadyState();
   const [onAdmin, setOnAdmin] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [flightsData, setFlightsData] = useState({});
@@ -30,6 +30,7 @@ function App() {
     includeIATCIFlights,
     showPassengerNames,
   ) => {
+    resetReady();
     const fixedDate = "01"; // Ensure this is dynamically updated if necessary
     setNewArrivalTime(newTime);
     setFlightNumber(flightNumber);
@@ -43,8 +44,10 @@ function App() {
       }
       const data = await response.json();
       console.log(data);
+      console.log("Ready state: ", makeReady());
       setSearchResults(data);
       makeReady();
+      console.log("Ready state: ", makeReady());
     } catch (error) {
       console.error("Error fetching data:", error);
       setSearchResults([]); 
