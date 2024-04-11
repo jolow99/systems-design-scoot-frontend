@@ -54,8 +54,8 @@ export default function AdminSection() {
                                 <td className="border px-4 py-2">{record.fields.remarks}</td>
                             </tr>
                             {selectedFlight === record.fields.flight_number && (
-                                <tr className="expanded-row">
-                                    <td colSpan="4">
+                                <tr className="expanded-row w-full">
+                                    <td colSpan="5">
                                         <div className={`mt-6 mb-6`}>
                                             <h1 className="text-3xl font-bold text-center mt-8 mb-4">Cost Breakdown for TR{record.fields.flight_number}:</h1>
                                             <table className="mx-auto w-full lg:w-1/2 table-fixed">

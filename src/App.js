@@ -59,6 +59,7 @@ function App() {
   const FIXED_DATE = "01";
 
   useEffect(() => {
+    // fetch("/connecting_flights_dict.json (old)")
     fetch("/connecting_flights_dict.json")
       .then((response) => response.json())
       .then((data) => {
