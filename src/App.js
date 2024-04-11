@@ -23,6 +23,7 @@ function App() {
   const [selectedJustification, setSelectedJustification] = useState(null);
   const [remarks, setRemarks] = useState("");
   const [tableData, setTableData] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   
   const onSearch = async (
     flightNumber,
@@ -31,6 +32,7 @@ function App() {
     showPassengerNames,
   ) => {
     resetReady();
+    setIsSearching(true);
     const fixedDate = "01"; // Ensure this is dynamically updated if necessary
     setNewArrivalTime(newTime);
     setFlightNumber(flightNumber);
@@ -44,13 +46,13 @@ function App() {
       }
       const data = await response.json();
       console.log(data);
-      console.log("Ready state: ", makeReady());
       setSearchResults(data);
       makeReady();
-      console.log("Ready state: ", makeReady());
     } catch (error) {
       console.error("Error fetching data:", error);
       setSearchResults([]); 
+    } finally {
+      setIsSearching(false);
     }
   };
 
@@ -92,6 +94,7 @@ function App() {
           flightNumber={flightNumber}
         />
         <ReportSection
+          isSearching={isSearching}
           newArrivalTime={newArrivalTime}
           searchResults={searchResults}
           fixedDate={FIXED_DATE}

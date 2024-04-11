@@ -54,4 +54,17 @@
     margin-top: 8px;
     margin-bottom: 8px;
   }
-    
+  
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .loader {
+    animation: spinner 1s linear infinite;
+    border-color: #ddd transparent #ddd transparent; /* Control the color of your spinner here */
+  }

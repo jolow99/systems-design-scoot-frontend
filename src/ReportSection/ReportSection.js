@@ -92,6 +92,7 @@ const ReportSection = ({
   setSelectedConnectingFlightNumber,
   newArrivalTime,
   searchResults,
+  isSearching,
 }) => {
   const { isReady } = useReadyState();
   const [selectedRow, setSelectedRow] = useState(null);
@@ -172,7 +173,12 @@ const ReportSection = ({
         <div>Flight No: TR{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
       </div>
-      {isReady && (
+      {/* {isReady && ( */}
+      {isSearching ? (
+        <div className="flex justify-center items-center m-8">
+          <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
+        </div>
+      ) : (
         <div className="w-[90%] m-8 flex flex-col items-center justify-center overflow-y-auto shadow-md sm:rounded-lg">
           {connectingFlightsData &&
             Object.entries(connectingFlightsData).map(([flightNum, details]) => (
