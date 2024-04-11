@@ -59,8 +59,8 @@ export default function AdminSection() {
                                             <table className="mx-auto w-full lg:w-1/2 table-fixed">
                                                 <tbody>
                                                     <tr>
-                                                        <th className={`text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision === 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>No Delay Cost Breakdown</th>
-                                                        <th className={`text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision === 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>Cost</th>
+                                                        <th className={`border text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision === 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>No Delay Cost Breakdown</th>
+                                                        <th className={`border text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision === 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>Cost</th>
                                                     </tr>
                                                     <tr className="bg-gray-100 hover:bg-gray-200 border px-4 py-2">
                                                         <td className="border px-4 py-2">No Delay Operational Cost</td>
@@ -89,8 +89,8 @@ export default function AdminSection() {
                                             <table className="mx-auto w-full lg:w-1/2 table-fixed">
                                                 <tbody>
                                                     <tr>
-                                                        <th className={`text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision !== 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>Delay Cost Breakdown</th>
-                                                        <th className={`text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision !== 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>Cost</th>
+                                                        <th className={`border text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision !== 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>Delay Cost Breakdown</th>
+                                                        <th className={`border text-xl mt-6 mb-6 px-4 py-2 ${record.fields.decision !== 'noDelay' ? 'bg-yellow-100' : 'bg-white'}`}>Cost</th>
                                                     </tr>
                                                     <tr className="bg-gray-100 hover:bg-gray-200 border px-4 py-2">
                                                         <td>Delay Operational Cost</td>
