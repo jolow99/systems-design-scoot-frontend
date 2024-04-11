@@ -23,10 +23,8 @@ ChartJS.register(
 );
 
 export const LineChart_FlightCost = ({ costData }) => { 
-  // Assuming a time increment of 5 minutes between each data point
   const timeIncrement = 1;
   
-  // Assuming all cost arrays are of equal length and using the first one to determine labels
   const firstCostTypeKey = Object.keys(costData)[0];
   const numberOfPoints = costData[firstCostTypeKey]?.length || 0;
   const labels = Array.from({ length: numberOfPoints }, (_, index) => `${index * timeIncrement} min`);
@@ -34,30 +32,6 @@ export const LineChart_FlightCost = ({ costData }) => {
   const data = {
     labels,
     datasets: [
-      // {
-      //   label: 'Downstream Cost',
-      //   data: costData.downstream_cost,
-      //   borderColor: 'rgb(255, 99, 132)',
-      //   backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      // },
-      // {
-      //   label: 'Operational Cost',
-      //   data: costData.operational_cost,
-      //   borderColor: 'rgb(53, 162, 235)',
-      //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      // },
-      // {
-      //   label: 'Reimbursement Cost',
-      //   data: costData.reimbursement_cost,
-      //   borderColor: 'rgb(75, 192, 192)',
-      //   backgroundColor: 'rgba(75, 192, 192, 0.5)',
-      // },
-      // {
-      //   label: 'Satisfaction Cost',
-      //   data: costData.satisfaction_cost,
-      //   borderColor: 'rgb(255, 205, 86)',
-      //   backgroundColor: 'rgba(255, 205, 86, 0.5)',
-      // },
       {
         label: 'Delay Cost',
         data: costData.total_cost,

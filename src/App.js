@@ -37,7 +37,8 @@ function App() {
     setNewArrivalTime(newTime);
     setFlightNumber(flightNumber);
     // console.log(newTime);
-    const apiURL = `https://systems-design-scoot-backend.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}/True`;
+    // const apiURL = `https://systems-design-scoot-backend-fork-jeffs-projects-47393e1a.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}/False`;
+    const apiURL = `https://systems-design-scoot-backend-fork-jeffs-projects-47393e1a.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}/True`;
     console.log(apiURL);
     try {
       const response = await fetch(apiURL);
@@ -59,7 +60,7 @@ function App() {
   const FIXED_DATE = "01";
 
   useEffect(() => {
-    // fetch("/connecting_flights_dict.json (old)")
+    // fetch("/connecting_flights_dict_old.json")
     fetch("/connecting_flights_dict.json")
       .then((response) => response.json())
       .then((data) => {

@@ -11,6 +11,7 @@ const FilterBar = ({
   const [includeIATCIFlights, setIncludeIATCIFlights] = useState(true);
   const [showPassengerNames, setShowPassengerNames] = useState(false);
   const [newArrivalTime, setNewArrivalTime] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -18,14 +19,25 @@ const FilterBar = ({
 
     if (!newArrivalTime.match(/^\d{2}:\d{2}$/)) {
       console.error("Invalid newArrivalTime format");
+      setErrorMessage("Invalid time format");
       return;
+    }
+
+    const [hours, minutes] = newArrivalTime.split(':').map(Number);
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+        console.error("Invalid time. Hours should be between 00 and 23, and minutes should be between 00 and 59.");
+        setErrorMessage("Invalid time");
+        return;
     }
 
     console.log(flightNumber);
     if (flightNumber.trim().length === 0) {
       console.error("Flight number is required");
+      setErrorMessage("Flight number is required");
       return;
     }
+
+    setErrorMessage("");
 
     onSearch(
       flightNumber,
@@ -86,6 +98,7 @@ const FilterBar = ({
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
+        {errorMessage && <div className="text-red-500">{errorMessage}</div>}
 
         <fieldset className="space-y-1">
           <legend className="font-semibold text-gray-700">
