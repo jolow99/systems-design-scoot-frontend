@@ -129,6 +129,7 @@ const ReportSection = ({
     base('Table 1').create([
       {
         "fields": {
+          "date": fixedDate+"JAN24",
           "flight_number": flightNumber,
           "no_delay_operational_cost": tableData.find(item => item.name === "operational_cost").noDelay.toString(),
           "delay_operational_cost": tableData.find(item => item.name === "operational_cost").delay.toString(),
