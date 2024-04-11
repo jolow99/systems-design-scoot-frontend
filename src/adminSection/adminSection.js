@@ -35,6 +35,7 @@ export default function AdminSection() {
             <table className="table-auto w-full">
                 <thead>
                     <tr>
+                        <th className="border px-4 py-2 text-xl">Date</th>
                         <th className="border px-4 py-2 text-xl">Flight Number</th>
                         <th className="border px-4 py-2 text-xl">Decision</th>
                         <th className="border px-4 py-2 text-xl">Justification</th>
@@ -46,6 +47,7 @@ export default function AdminSection() {
                         <>
                             <tr key={record.fields.flight_number} onClick={() => handleFlightSelect(record.fields.flight_number)} 
                                 className={`cursor-pointer ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-200`}>
+                                <td className="border px-4 py-2">{record.fields.date}</td>
                                 <td className="border px-4 py-2">TR{record.fields.flight_number}</td>
                                 <td className="border px-4 py-2">{record.fields.decision}</td>
                                 <td className="border px-4 py-2">{record.fields.justification}</td>
