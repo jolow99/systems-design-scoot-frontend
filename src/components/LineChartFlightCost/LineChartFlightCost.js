@@ -25,7 +25,7 @@ ChartJS.register(
 export const LineChart_FlightCost = ({ costData }) => { 
   const timeIncrement = 1;
   
-  const firstCostTypeKey = Object.keys(costData)[0];
+  const firstCostTypeKey = Object.keys(costData)[1];
   const numberOfPoints = costData[firstCostTypeKey]?.length || 0;
   const labels = Array.from({ length: numberOfPoints }, (_, index) => `${index * timeIncrement} min`);
 
@@ -44,7 +44,7 @@ export const LineChart_FlightCost = ({ costData }) => {
       },
       {
         label: 'No Delay Cost',
-        data: Array.from({ length: numberOfPoints }, (_, index) => costData[firstCostTypeKey][index]),
+        data: Array.from({ length: numberOfPoints }, (_, index) => costData[firstCostTypeKey][1]),
         fill: false,
         backgroundColor: "#EE5757",
         borderColor: "#EE5757",
