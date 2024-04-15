@@ -45,8 +45,10 @@ export default function AdminSection() {
                 <tbody>
                     {tableData.map((record, index) => (
                         <>
-                            <tr key={record.fields.flight_number} onClick={() => handleFlightSelect(record.fields.flight_number)} 
-                                className={`cursor-pointer ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-200`}>
+                            <tr 
+                                key={record.fields.flight_number} 
+                                onClick={() => handleFlightSelect(record.fields.flight_number)} 
+                                className={`cursor-pointer ${selectedFlight === record.fields.flight_number ? 'bg-blue-200' : (index % 2 === 0 ? 'bg-gray-100' : 'bg-white')} hover:bg-gray-200`}>
                                 <td className="border px-4 py-2">{record.fields.date}</td>
                                 <td className="border px-4 py-2">TR{record.fields.flight_number}</td>
                                 <td className="border px-4 py-2">{record.fields.decision}</td>
