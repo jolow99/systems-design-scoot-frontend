@@ -1,5 +1,6 @@
 import { Line } from "react-chartjs-2";
 import React, { useEffect, useState } from "react";
+import annotationPlugin from 'chartjs-plugin-annotation';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,7 +20,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  annotationPlugin
 );
 
 export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => { 
@@ -28,9 +30,7 @@ export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => {
   const firstCostTypeKey = Object.keys(costData)[0];
   const numberOfPoints = costData[firstCostTypeKey]?.length || 0;
   const labels = Array.from({ length: numberOfPoints }, (_, index) => `${index * timeIncrement} min`);
-  if (costData.total_cost.length > 1) {
-    costData.total_cost[0] = costData.total_cost[1];
-  }
+  costData.total_cost[0] = costData.total_cost[1];  
 
   // // console.log(noDelayTotalCost)
   const totalCostObject = noDelayTotalCost.find(item => item.name === "total_cost");
@@ -52,8 +52,8 @@ export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => {
       },
       {
         label: 'No Delay Cost',
-        // data: Array.from({ length: numberOfPoints }, (_, index) => NDtotalCost),
-        data: Array(costData.total_cost.length).fill(costData.total_cost[1]),
+        data: Array.from({ length: numberOfPoints }, (_, index) => NDtotalCost),
+        // data: Array(costData.total_cost.length).fill(costData.total_cost[1]),
         // data: Array.from({ length: numberOfPoints }, (_, index) => costData[firstCostTypeKey][1]),
         fill: false,
         backgroundColor: "#EE5757",
@@ -122,6 +122,9 @@ export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => {
     );
   };
 
+  const minCostIndex = data.datasets[0].data.indexOf(Math.min(...data.datasets[0].data));
+  const minValueLabel = labels[minCostIndex];
+
   let maxValue = Math.max(...data.datasets[0].data, ...data.datasets[1].data);
   maxValue += 50;
 
@@ -168,6 +171,18 @@ export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => {
       },
       legend: {
         display: false,
+      },
+      annotation: {
+        annotations: {
+          line1: {
+            type: 'line',
+            xMin: minValueLabel,
+            xMax: minValueLabel,
+            borderColor: 'rgb(0, 204, 102)',
+            borderWidth: 2,
+            borderDash: [10, 5],
+          },
+        },
       },
     },
     responsive: true,

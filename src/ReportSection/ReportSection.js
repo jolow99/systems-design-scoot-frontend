@@ -171,6 +171,7 @@ const ReportSection = ({
       </div>
       <div className="report-metadata">
         <div>Origin City: {scheduleInfo?.departure}</div>
+        <div>Arrival City: {scheduleInfo?.arrival}</div>
         <div>Flight No: TR{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
         <div>Estimated Arrival Time: {scheduleInfo?.estimated_arrival_time}</div>
@@ -189,6 +190,7 @@ const ReportSection = ({
                 details={{
                   ...details,
                   departure_time: flightSchedules[flightNum]?.departure_time,
+                  departure: flightSchedules[flightNum]?.departure,
                   arrival: flightSchedules[flightNum]?.arrival,
                 }}
                 newArrivalTime={newArrivalTime}
@@ -310,6 +312,7 @@ const Row = ({ flightNum, details, onClick, newArrivalTime }) => {
       <p>Point to point passengers: {details.p2p}</p>
       <p>Connecting passengers: {details.cp}</p>
       <p>Departure Time: {details.departure_time}</p>
+      <p>Departure City: {details.departure}</p>
       <p>Arrival City: {details.arrival}</p>
       {/* {(isAfterNewArrival || !isWithinMCT) && (
         <p className="text-red-500">Delay decision required</p>
