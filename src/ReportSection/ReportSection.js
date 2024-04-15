@@ -173,6 +173,7 @@ const ReportSection = ({
         <div>Origin City: {scheduleInfo?.departure}</div>
         <div>Flight No: TR{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
+        <div>Estimated Arrival Time: {scheduleInfo?.estimated_arrival_time}</div>
       </div>
       {isSearching ? (
         <div className="flex justify-center items-center m-8">

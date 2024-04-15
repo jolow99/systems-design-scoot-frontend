@@ -32,10 +32,10 @@ export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => {
     costData.total_cost[0] = costData.total_cost[1];
   }
 
-  // console.log(noDelayTotalCost)
+  // // console.log(noDelayTotalCost)
   const totalCostObject = noDelayTotalCost.find(item => item.name === "total_cost");
   const NDtotalCost = totalCostObject ? totalCostObject.noDelay : null;
-  // console.log(NDtotalCost);
+  // // console.log(NDtotalCost);
 
   const data = {
     labels,
@@ -52,7 +52,9 @@ export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => {
       },
       {
         label: 'No Delay Cost',
-        data: Array.from({ length: numberOfPoints }, (_, index) => NDtotalCost),
+        // data: Array.from({ length: numberOfPoints }, (_, index) => NDtotalCost),
+        data: Array(costData.total_cost.length).fill(costData.total_cost[1]),
+        // data: Array.from({ length: numberOfPoints }, (_, index) => costData[firstCostTypeKey][1]),
         fill: false,
         backgroundColor: "#EE5757",
         borderColor: "#EE5757",
