@@ -22,12 +22,20 @@ ChartJS.register(
   Legend
 );
 
-export const LineChart_FlightCost = ({ costData }) => { 
+export const LineChart_FlightCost = ({ costData, noDelayTotalCost }) => { 
   const timeIncrement = 1;
   
-  const firstCostTypeKey = Object.keys(costData)[1];
+  const firstCostTypeKey = Object.keys(costData)[0];
   const numberOfPoints = costData[firstCostTypeKey]?.length || 0;
   const labels = Array.from({ length: numberOfPoints }, (_, index) => `${index * timeIncrement} min`);
+  if (costData.total_cost.length > 1) {
+    costData.total_cost[0] = costData.total_cost[1];
+  }
+
+  // console.log(noDelayTotalCost)
+  const totalCostObject = noDelayTotalCost.find(item => item.name === "total_cost");
+  const NDtotalCost = totalCostObject ? totalCostObject.noDelay : null;
+  // console.log(NDtotalCost);
 
   const data = {
     labels,
@@ -44,7 +52,7 @@ export const LineChart_FlightCost = ({ costData }) => {
       },
       {
         label: 'No Delay Cost',
-        data: Array.from({ length: numberOfPoints }, (_, index) => costData[firstCostTypeKey][1]),
+        data: Array.from({ length: numberOfPoints }, (_, index) => NDtotalCost),
         fill: false,
         backgroundColor: "#EE5757",
         borderColor: "#EE5757",

@@ -37,8 +37,8 @@ function App() {
     setNewArrivalTime(newTime);
     setFlightNumber(flightNumber);
     // console.log(newTime);
-    // const apiURL = `https://systems-design-scoot-backend-fork-jeffs-projects-47393e1a.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}/False`;
-    const apiURL = `https://systems-design-scoot-backend-fork-jeffs-projects-47393e1a.vercel.app/flight/${flightNumber}/2023-04-${fixedDate}/${newTime}/True`;
+    // const apiURL = `https://systems-design-scoot-backend-fork-jeffs-projects-47393e1a.vercel.app/flight/${flightNumber}/2024-04-${fixedDate}/${newTime}/False`;
+    const apiURL = `https://systems-design-scoot-backend-fork-jeffs-projects-47393e1a.vercel.app/flight/${flightNumber}/2024-04-${fixedDate}/${newTime}/True`;
     console.log(apiURL);
     try {
       const response = await fetch(apiURL);

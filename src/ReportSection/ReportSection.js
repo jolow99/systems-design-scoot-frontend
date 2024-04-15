@@ -213,6 +213,7 @@ const ReportSection = ({
               </span>
               <LineChart_FlightCost
                 costData={costData}
+                noDelayTotalCost={tableData}
               />
             </div>
           </div>
