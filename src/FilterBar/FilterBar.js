@@ -64,8 +64,8 @@ const FilterBar = ({
     
     setNewArrivalTime(newValue.substring(0, 5)); 
   };
-  
 
+  
   return (
     <div
       className={`filter-bar bg-gray-50 p-4 rounded-lg shadow-md w-1/2 ${className}`}

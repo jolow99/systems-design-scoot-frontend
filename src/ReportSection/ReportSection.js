@@ -174,7 +174,6 @@ const ReportSection = ({
         <div>Flight No: TR{flightNumber}</div>
         <div>Flight Date: {fixedDate}JAN24</div>
       </div>
-      {/* {isReady && ( */}
       {isSearching ? (
         <div className="flex justify-center items-center m-8">
           <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
@@ -195,6 +194,7 @@ const ReportSection = ({
                 onClick={() => {
                   setSelectedConnectingFlightNumber(flightNum);
                   setSelectedRow(details);
+                  setSelectedJustification(null);
                 }}
               />
             ))}
