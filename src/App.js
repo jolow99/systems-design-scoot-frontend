@@ -33,6 +33,7 @@ function App() {
   ) => {
     resetReady();
     setIsSearching(true);
+    const fixedDate = "01";
     setNewArrivalTime(newTime);
     setFlightNumber(flightNumber);
     // console.log(newTime);
